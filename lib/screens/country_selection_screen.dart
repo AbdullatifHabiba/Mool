@@ -1,63 +1,56 @@
 import 'package:flutter/material.dart';
-import 'create_account_screen.dart';
+import 'package:mool/widgets/custom_radio_button.dart';
+class CountrySelectionSheet extends StatelessWidget {
+  final String? selectedCountry;
+  final ValueChanged<String?> onCountrySelected;
 
-class CountrySelectionScreen extends StatefulWidget {
-  const CountrySelectionScreen({super.key});
-
-  @override
-  _CountrySelectionScreenState createState() => _CountrySelectionScreenState();
-}
-
-class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
-  String? selectedCountry;
+  const CountrySelectionSheet({super.key, 
+    required this.selectedCountry,
+    required this.onCountrySelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Country'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      height: MediaQuery.of(context).size.height * 0.5, // Adjust the height
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
+          const Text(
+            'Select Country',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView(
               children: [
                 CustomRadioButton(
                   title: '🇸🇦 Saudi Arabia',
                   value: 'Saudi Arabia',
                   groupValue: selectedCountry,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCountry = value;
-                    });
-                  },
+                  onChanged: onCountrySelected,
                 ),
                 CustomRadioButton(
                   title: '🇦🇪 United Arab Emirates',
                   value: 'United Arab Emirates',
                   groupValue: selectedCountry,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCountry = value;
-                    });
-                  },
+                  onChanged: onCountrySelected,
                 ),
                 CustomRadioButton(
                   title: '🇪🇬 Egypt',
                   value: 'Egypt',
                   groupValue: selectedCountry,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCountry = value;
-                    });
-                  },
+                  onChanged: onCountrySelected,
                 ),
+                // Add more countries as needed
               ],
             ),
           ),
-          const SizedBox(height: 50),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,
@@ -65,12 +58,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
               minimumSize: const Size(200, 50),
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CreateAccountScreen(),
-                ),
-              );
+              Navigator.pop(context);
             },
             child: const Text(
               'Continue',
@@ -83,56 +71,3 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
   }
 }
 
-class CustomRadioButton extends StatelessWidget {
-  final String title;
-  final String value;
-  final String? groupValue;
-  final ValueChanged<String?> onChanged;
-
-  const CustomRadioButton({
-    required this.title,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onChanged(value);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title),
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: groupValue == value
-                    ? Colors.black
-                    : Colors.transparent, // Background color
-                border: Border.all(
-                  color: groupValue == value ? Colors.black : Colors.grey,
-                  width: 2.0,
-                ),
-              ),
-              child: groupValue == value
-                  ? const Icon(
-                      Icons.check,
-                      size: 20.0,
-                      color: Colors.white, // Check mark color
-                    )
-                  : const SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

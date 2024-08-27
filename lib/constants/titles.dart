@@ -11,6 +11,7 @@ class Titles {
   static const String continueAsGuest = 'Continue as Guest';
   static const String forgotPassword = 'Forgot Password';
   static const String createAccount = 'Create Account';
+  static const String startShopping = 'Start Shopping Now';
   static const String signIn = 'Sign In';
   static const String welcome = 'Welcome';
   static const String countrySelection = 'Country Selection';
@@ -27,4 +28,6 @@ class Titles {
   static const String dontHaveAccount = 'Don\'t have an account ?';
   static const String findTheBestCollection =
       'Find the best Collection';
+
+  static const country='Country';
 }
