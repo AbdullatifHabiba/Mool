@@ -12,19 +12,24 @@ class ForgetPasswordScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0.0,
         leading: const CustomBackArrow(),
+        title: const Center(
+          child: Text(
+                  'Forget Password',
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Forget Password',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          
             const SizedBox(height: 20),
             const TextField(
               decoration: InputDecoration(

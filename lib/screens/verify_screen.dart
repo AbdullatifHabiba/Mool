@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/screens/reset_password_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
+import 'package:mool/widgets/verification_code_field.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -85,38 +87,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   padding: const EdgeInsets.all(16),
                 ),
                 onPressed: () {
-                  // Handle code submission
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPasswordScreen(),
+                    ),
+                  );
+                  
                 },
                 child: const Text('Submit',
                     style: TextStyle(color: Colors.white)),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class VerificationCodeField extends StatelessWidget {
-  const VerificationCodeField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 50,
-      child: TextField(
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 24),
-        maxLength: 1,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          counterText: '',
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            borderSide: BorderSide.none,
           ),
         ),
       ),

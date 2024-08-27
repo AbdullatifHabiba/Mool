@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/constants/titles.dart';
 import 'package:mool/screens/create_account_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 import 'package:mool/widgets/social_icons_widget.dart';
@@ -18,7 +19,7 @@ class SignInScreen extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
+                image: AssetImage(Images.background),
                 fit: BoxFit.cover,
               ),
             ),
@@ -48,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
-                        'Sign In',
+                        Titles.signIn,
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -59,7 +60,7 @@ class SignInScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
-                        'Welcome',
+                        'Welcome!',
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -70,83 +71,84 @@ class SignInScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF5F5F5),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
-                    ),
+              const Spacer(), // Pushes the bottom container to the bottom
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF5F5F5),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const CustomTextField(label: 'Email'),
-                      const CustomTextField(label: 'Password', obscureText: true),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ForgetPasswordScreen()),
-                          );
-                        },
-                        child: Container(
-                          alignment: Alignment.centerRight, // Align to right
-                          child: const Text(
-                            'Forget Password?',
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Handle Sign Up
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                        ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const CustomTextField(label: 'Email'),
+                    const CustomTextField(
+                        label: 'Password', obscureText: true),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgetPasswordScreen()),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.centerRight, // Align to right
                         child: const Text(
-                          'Sign in',
-                          style: TextStyle(color: Colors.white),
+                          'Forget Password?',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Don\'t Have account ?'),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const CreateAccountScreen(),
-                              ));
-                              // Handle Login
-                            },
-                            child: const Text('SignUp'),
-                          ),
-                        ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle Sign Up
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
-                      const Row(
-                        children: [
-                          Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('OR'),
-                          ),
-                          Expanded(child: Divider()),
-                        ],
+                      child: const Text(
+                        'Sign in',
+                        style: TextStyle(color: Colors.white),
                       ),
-                      const SizedBox(height: 20),
-                      const SocialIconsWidget(),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Don\'t Have account ?'),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const CreateAccountScreen(),
+                            ));
+                            // Handle Login
+                          },
+                          child: const Text('SignUp'),
+                        ),
+                      ],
+                    ),
+                    const Row(
+                      children: [
+                        Expanded(child: Divider()),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text('OR'),
+                        ),
+                        Expanded(child: Divider()),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const SocialIconsWidget(),
+                  ],
                 ),
               ),
             ],

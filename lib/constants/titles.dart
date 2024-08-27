@@ -30,4 +30,6 @@ class Titles {
       'Find the best Collection';
 
   static const country='Country';
+
+  static const String  resetPassword='Reset Password';
 }
