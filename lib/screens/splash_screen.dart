@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mool/constants/images.dart';
 import 'package:mool/screens/welcome_screen.dart';
+import 'package:mool/widgets/custom_image_view.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -7,8 +9,8 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+      Navigator.of(context).pushReplacement(
+           MaterialPageRoute(builder: (context) => const WelcomeScreen()));
     });
     return Scaffold(
       body: SafeArea(
@@ -20,7 +22,7 @@ class SplashScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomImageView(
-                  imagePath: ImageConstant.imgImage1,
+                  imagePath: Images.logo,
                   height: 150.0,
                   width: 200.0,
                 ),
@@ -40,36 +42,4 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
-class CustomImageView extends StatelessWidget {
-  final String imagePath;
-  final double height;
-  final double width;
-  final Alignment alignment;
-  final EdgeInsets margin;
 
-  const CustomImageView({
-    super.key,
-    required this.imagePath,
-    this.height = 100.0,
-    this.width = double.infinity,
-    this.alignment = Alignment.center,
-    this.margin = EdgeInsets.zero,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      alignment: alignment,
-      child: Image.asset(
-        imagePath,
-        height: height,
-        width: width,
-      ),
-    );
-  }
-}
-
-class ImageConstant {
-  static const String imgImage1 = 'assets/images/logo.png';
-}
