@@ -36,6 +36,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
         backgroundColor: Colors.black,
         elevation: 0.0,
         leading: const CustomBackArrow(),
+        title: const Center(
+          child: Text(
+                  'Verification',
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+        ),
+              
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -43,15 +55,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                'Verification',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const Image(image: AssetImage(Images.verfiy)),
+             const Image(image: AssetImage(Images.verfiy)),
               const Text(
                 'Enter 4 Digits code has been sent to +961518745363',
                 style: TextStyle(
