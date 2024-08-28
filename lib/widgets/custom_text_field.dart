@@ -14,26 +14,26 @@ class CustomTextField extends StatelessWidget {
           obscureText: obscureText,
           decoration: InputDecoration(
             labelText: label,
-            fillColor: Colors.white, // Set background color to white
-            filled: true, // Enable filling the background color
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
+            // fillColor: Colors.white, // Set background color to white
+            // filled: true, // Enable filling the background color
+            // border: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(16.0),
+            //   borderSide: const BorderSide(
+            //     color: Colors.white, // Set border color to white
+            //   ),
+            // ),
+            // enabledBorder: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(16.0),
+            //   borderSide: const BorderSide(
+            //     color: Colors.white, // Set border color to white
+            //   ),
+            // ),
+            // focusedBorder: OutlineInputBorder(
+              // borderRadius: BorderRadius.circular(16.0),
+              // borderSide: const BorderSide(
+              //   color: Colors.white, // Set border color to white
+              // ),
+            
           ),
         ),
       );

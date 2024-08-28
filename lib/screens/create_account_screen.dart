@@ -53,54 +53,49 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             ),
           ),
           // Foreground content
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 250,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.transparent,
+                leading: const CustomBackArrow(),
+                title: Center(
+                  child: Image.asset(
+                    Images.logo,
+                    height: 50,
+                  ),
+                ),
+                pinned: true,
+                expandedHeight: 250.0,
+                flexibleSpace: const FlexibleSpaceBar(
+                  centerTitle: false,
+                  titlePadding: EdgeInsets.only(left: 16.0, bottom: 16.0),
+                  title: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppBar(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0.0,
-                        leading: const CustomBackArrow(),
-                        title: Center(
-                          child: Image.asset(
-                            Images.logo,
-                            height: 50,
-                          ),
+                      Text(
+                        Titles.createAccount,
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          Titles.createAccount,
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          Titles.startShopping,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                      Text(
+                        Titles.startShopping,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(
+              ),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: const BoxDecoration(
                     color: Color(0xFFF5F5F5),
@@ -208,8 +203,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

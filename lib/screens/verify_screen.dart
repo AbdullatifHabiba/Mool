@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/screens/reset_password_screen.dart';
-import 'package:mool/widgets/custom_back_arrow.dart';
+import 'package:mool/widgets/custum_app_bar.dart';
 import 'package:mool/widgets/verification_code_field.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -34,72 +34,60 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0.0,
-        leading: const CustomBackArrow(),
-        title: const Center(
-          child: Text(
-                  'Verification',
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-        ),
-              
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-             const Image(image: AssetImage(Images.verfiy)),
-              const Text(
-                'Enter 4 Digits code has been sent to +961518745363',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  VerificationCodeField(),
-                  VerificationCodeField(),
-                  VerificationCodeField(),
-                  VerificationCodeField(),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Resend code in 00:${_timerCountdown.toString().padLeft(2, '0')}',
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  padding: const EdgeInsets.all(16),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPasswordScreen(),
+      body: Column(
+        children: [
+          const CustomAppBar(title: 'Verification'),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(image: AssetImage(Images.verfiy)),
+                    const Text(
+                      'Enter 4 Digits code has been sent to +961518745363',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  );
-                  
-                },
-                child: const Text('Submit',
-                    style: TextStyle(color: Colors.white)),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        VerificationCodeField(),
+                        VerificationCodeField(),
+                        VerificationCodeField(),
+                        VerificationCodeField(),
+                      ],
+                    ),
+                    Text(
+                      'Resend code in 00:${_timerCountdown.toString().padLeft(2, '0')}',
+                      style: const TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.all(16),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Submit',
+                          style: TextStyle(color: Colors.white)),
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomBackArrow extends StatelessWidget {
   const CustomBackArrow({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 35,
-      height: 35,
-      margin: const EdgeInsets.only(left: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: Center(
-        child: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.white,
-          ),
-        ),
+    return IconButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+      //'assets/images/back.svg'
+      icon: SvgPicture.asset('assets/images/back.svg',
+           height: 50.0, width: 50.0
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/titles.dart';
-import 'package:mool/widgets/custom_back_arrow.dart';
+import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/widgets/custom_text_field.dart';
+import 'package:mool/widgets/custum_app_bar.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});
@@ -9,46 +10,37 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0.0,
-        leading: const CustomBackArrow(),
-        title: const Center(
-          child: Text(
-                 Titles.resetPassword,
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          const CustomAppBar(title: Titles.resetPassword),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomTextField(label: 'New Password'),
+                    const SizedBox(height: 20),
+                    const CustomTextField(label: 'Confirm Password'),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Submit', style: TextStyle(color: Colors.white)),
+                    ),
+                  ],
                 ),
-        ),
-              
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: [
-            const CustomTextField(label: 'New Password'),
-            const SizedBox(height: 20),
-            const CustomTextField(label: 'Confirm Password'),
-            const SizedBox(height: 20),
-              ElevatedButton(
-               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  padding: const EdgeInsets.all(16),
-                ),
-              onPressed: () {
-                // Handle Password Reset
-              },
-              child: const Text('Reset Password', style: TextStyle(color: Colors.white)),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

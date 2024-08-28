@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mool/screens/verify_screen.dart';
-import 'package:mool/widgets/custom_back_arrow.dart';
+import 'package:mool/widgets/custom_text_field.dart';
+import 'package:mool/widgets/custum_app_bar.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
@@ -8,58 +9,36 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0.0,
-        leading: const CustomBackArrow(),
-        title: const Center(
-          child: Text(
-                  'Forget Password',
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-          
-            const SizedBox(height: 20),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'Email or Mobile Number',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  borderSide: BorderSide.none,
+      body: Column(
+        children: [
+          const CustomAppBar(title: 'Forget\nPassword'),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 20),
+                    const CustomTextField(label: 'Email or Mobile Number'),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VerificationScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: const EdgeInsets.all(16),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const VerificationScreen(),
-                  ),
-                );
-              },
-              child: const Text('Submit'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

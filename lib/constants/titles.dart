@@ -9,13 +9,13 @@ class Titles {
   static const String login = 'Login';
   static const String signUp = 'Sign Up';
   static const String continueAsGuest = 'Continue as Guest';
-  static const String forgotPassword = 'Forgot Password';
+  static const String forgotPassword = 'Forgot\nPassword';
   static const String createAccount = 'Create Account';
   static const String startShopping = 'Start Shopping Now';
   static const String signIn = 'Sign In';
   static const String welcome = 'Welcome';
   static const String countrySelection = 'Country Selection';
-  static const String passwordReset = 'Password Reset';
+  static const String passwordReset = 'Password\nReset';
   static const String passwordResetSuccess = 'Password Reset Success';
   static const String passwordResetFailed = 'Password Reset Failed';
   static const String getYourDreamItems =
