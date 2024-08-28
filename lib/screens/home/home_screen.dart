@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
-import 'package:mool/widgets/custom_back_arrow.dart';
+import 'package:mool/widgets/cursoal_slider.dart';
+import 'package:mool/constants/images.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const CustomBackArrow(),
+        automaticallyImplyLeading: false,
         title: Image.asset(Images.logo, height: 50),
         actions: [
           IconButton(
@@ -25,19 +26,17 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Slider Section
-            SizedBox(
-              height: 200, // Adjust height as needed
-              child: PageView(
-                children: [
-                  buildSliderItem(Images.background),
-                  buildSliderItem(Images.background),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Top Brands Section
             buildTopBrandsSection(),
+            const SizedBox(height: 16),
+
+            const CarouselSliderWidget(
+              mediaPaths: [
+                Images.background,
+                Images.person,
+                Images.background,
+              ],
+            ),
+
             const SizedBox(height: 16),
             // New Arrival Section
             buildSectionTitle('New Arrival'),
@@ -54,7 +53,8 @@ class HomeScreen extends StatelessWidget {
         currentIndex: 0,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
@@ -73,14 +73,19 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildTopBrandsSection() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return SizedBox(
+      height: 90, // Adjust height based on your design
+      child: ListView(
+        scrollDirection: Axis.horizontal,
         children: [
-          Image.asset(Images.person, width: 50, height: 50),
-          Image.asset(Images.person, width: 50, height: 50),
-          // Add more brands as needed
+          buildTrendItem('Sales', Images.frame),
+          buildTrendItem('Dresees', Images.frame),
+          buildTrendItem('Tops', Images.frame),
+          buildTrendItem('Bottoms', Images.frame),
+          buildTrendItem('Shoes', Images.frame),
+          buildTrendItem('Accessories', Images.frame),
+          buildTrendItem('Bags', Images.frame),
+          buildTrendItem('Beauty', Images.frame),
         ],
       ),
     );
@@ -104,13 +109,29 @@ class HomeScreen extends StatelessWidget {
 
   Widget buildProductListView() {
     return SizedBox(
-      height: 150, // Adjust height based on your design
+      height: 116, // Adjust height based on your design
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
           buildProductItem('Red Dress', Images.person, '2500 SAR'),
           buildProductItem('Yellow Dress', Images.person, '2500 SAR'),
+          buildProductItem('Red Dress', Images.person, '2500 SAR'),
+          buildProductItem('Yellow Dress', Images.person, '2500 SAR'),
           // Add more products as needed
+        ],
+      ),
+    );
+  }
+
+  Widget buildTrendItem(String title, String imagePath) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(imagePath, width: 48, height: 48),
+          Text(title,
+              style: const TextStyle(fontSize: 16, color: Colors.black)),
         ],
       ),
     );
@@ -122,7 +143,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(imagePath, width: 100, height: 100),
+          Image.asset(imagePath, width: 100, height: 60),
           Text(title),
           Text(price),
         ],
