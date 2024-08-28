@@ -80,11 +80,11 @@ ThemeData appTheme() {
           ),
     // Bottom navigation bar theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey,
       selectedItemColor: Colors.green,
       unselectedItemColor: Colors.black,
       showSelectedLabels: true,
-      showUnselectedLabels: true,
+      showUnselectedLabels: false,
     ),
 
     

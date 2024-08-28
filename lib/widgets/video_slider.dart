@@ -12,6 +12,7 @@ class VideoSliderItem extends StatefulWidget {
 
 class _VideoSliderItemState extends State<VideoSliderItem> {
   late VideoPlayerController _videoController;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _VideoSliderItemState extends State<VideoSliderItem> {
       ..initialize().then((_) {
         setState(() {});
         _videoController.play();
+        _isPlaying = true;
       });
   }
 
@@ -32,9 +34,21 @@ class _VideoSliderItemState extends State<VideoSliderItem> {
   @override
   Widget build(BuildContext context) {
     return _videoController.value.isInitialized
-        ? AspectRatio(
-            aspectRatio: _videoController.value.aspectRatio,
-            child: VideoPlayer(_videoController),
+        ? GestureDetector(
+            onTap: () {
+              setState(() {
+                if (_isPlaying) {
+                  _videoController.pause();
+                } else {
+                  _videoController.play();
+                }
+                _isPlaying = !_isPlaying;
+              });
+            },
+            child: AspectRatio(
+              aspectRatio: _videoController.value.aspectRatio,
+              child: VideoPlayer(_videoController),
+            ),
           )
         : const Center(child: CircularProgressIndicator());
   }

@@ -5,4 +5,5 @@ class Images {
   static const String background = 'assets/images/background.jpg';
   static const String verfiy = 'assets/images/freepik.png';
   static const String frame = 'assets/images/Frame.png';
+  static const String video = 'assets/slide.gif';
 }

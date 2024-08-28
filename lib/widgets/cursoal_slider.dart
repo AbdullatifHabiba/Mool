@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mool/widgets/image_slider.dart';
 import 'package:mool/widgets/video_slider.dart';
-import 'package:video_player/video_player.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   final List<String> mediaPaths;
@@ -29,7 +28,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
     return CarouselSlider(
       options: CarouselOptions(
         height: 400.0,
-        autoPlay: true,
+        autoPlay: false,
         enlargeCenterPage: true,
         aspectRatio: 16 / 9,
         viewportFraction: 0.8,
