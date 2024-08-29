@@ -52,47 +52,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100.0), // Adjust height to fit both lines
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: const Color(0xFF292D32),
-              automaticallyImplyLeading: false,
-              title: Image.asset(Images.logo, height: 50),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.notifications),
-                  onPressed: () {},
-                ),
+  return Scaffold(
+    appBar: PreferredSize(
+      preferredSize: const Size.fromHeight(100.0),
+      child: Column(
+        children: [
+          AppBar(
+            backgroundColor: const Color(0xFF292D32),
+            automaticallyImplyLeading: false,
+            title: Image.asset(Images.logo, height: 50),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          Container(
+            color: const Color(0xFF292D32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildGenderTab('WOMEN', 0),
+                _buildGenderTab('MEN', 1),
               ],
             ),
-            Container(
-              color: const Color(0xFF292D32), // Same background as the AppBar
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildGenderTab('WOMEN', 0),
-                  _buildGenderTab('MEN', 1),
-                ],
-              ),
-            ),
-          ],
+          ),
+        ],
+      ),
+    ),
+    body: Stack(
+      children: [
+        _currentScreen, // Your main screen content
+        CustomBottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
         ),
-      ),
-      body: _currentScreen,
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
-      ),
-    );
-  }
-
+      ],
+    ),
+  );
+}
   Widget _buildGenderTab(String label, int index) {
     return GestureDetector(
       onTap: () => _onGenderTabTapped(index),
