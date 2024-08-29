@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/constants/titles.dart';
-import 'package:mool/screens/country_selection_screen.dart';
-import 'package:mool/screens/sign_in_screen.dart';
+import 'package:mool/screens/auth/country_selection_screen.dart';
+import 'package:mool/screens/auth/sign_in_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
-import 'package:mool/widgets/social_icons_widget.dart';
-import '../widgets/custom_text_field.dart';
+import 'package:mool/widgets/auth_widgets/social_icons_widget.dart';
+import '../../widgets/custom_text_field.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});

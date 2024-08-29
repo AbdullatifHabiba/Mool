@@ -31,5 +31,5 @@ class Titles {
 
   static const country='Country';
 
-  static const String  resetPassword='Reset Password';
+  static const String  resetPassword='Reset\nPassword';
 }

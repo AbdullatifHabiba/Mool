@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
-import 'package:mool/widgets/cursoal_slider.dart';
+import 'package:mool/widgets/home_widgets/cursoal_slider.dart';
 class MainHomeScreen extends StatelessWidget {
   const MainHomeScreen({super.key});
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mool/screens/verify_screen.dart';
+import 'package:mool/screens/auth/verify_screen.dart';
 import 'package:mool/widgets/custom_text_field.dart';
 import 'package:mool/widgets/custum_app_bar.dart';
 

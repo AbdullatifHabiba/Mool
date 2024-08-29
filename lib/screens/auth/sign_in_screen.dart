@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/constants/titles.dart';
-import 'package:mool/screens/create_account_screen.dart';
+import 'package:mool/screens/auth/create_account_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
-import 'package:mool/widgets/social_icons_widget.dart';
-import '../widgets/custom_text_field.dart';
+import 'package:mool/widgets/auth_widgets/social_icons_widget.dart';
+import '../../widgets/custom_text_field.dart';
 import 'forget_password_screen.dart';
 
 class SignInScreen extends StatelessWidget {

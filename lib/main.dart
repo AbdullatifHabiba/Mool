@@ -13,17 +13,17 @@ class MoolApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mool',
-      theme: appTheme()
-      ,
+      theme: appTheme(),
       home: const SplashScreen(),
     );
   }
 }
+
 ThemeData appTheme() {
   return ThemeData(
     primaryColor: Colors.black, // Primary app color
     scaffoldBackgroundColor: Colors.grey[200], // Scaffold background color
-    fontFamily:'Roboto', // Set a global font family
+    fontFamily: 'Roboto', // Set a global font family
 
     // AppBar theme
     appBarTheme: const AppBarTheme(
@@ -57,36 +57,43 @@ ThemeData appTheme() {
 
     // Input decoration theme for text fields
     inputDecorationTheme: InputDecorationTheme(
-            fillColor: Colors.white, // Set background color to white
-            filled: true, // Enable filling the background color
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16.0),
-              borderSide: const BorderSide(
-                color: Colors.white, // Set border color to white
-              ),
-            ),
-          ),
+      fillColor: Colors.white, // Set background color to white
+      filled: true, // Enable filling the background color
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.0),
+        borderSide: const BorderSide(
+          color: Colors.white, // Set border color to white
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.0),
+        borderSide: const BorderSide(
+          color: Colors.white, // Set border color to white
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.0),
+        borderSide: const BorderSide(
+          color: Colors.white, // Set border color to white
+        ),
+      ),
+    ),
     // Bottom navigation bar theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.grey,
-      selectedItemColor: Colors.green,
-      unselectedItemColor: Colors.black,
-      showSelectedLabels: true,
-      showUnselectedLabels: false,
+      backgroundColor: Color(0xFF292D32), // Background from Figma
+      selectedItemColor: Color(0xFF33CCCC), // Color used in "Vector"
+      unselectedItemColor: Colors.white, // Common color used in Vectors
+      selectedIconTheme: IconThemeData(
+        size: 24, // Matching icon sizes from Figma
+      ),
+      unselectedIconTheme: IconThemeData(
+        size: 24, // Matching icon sizes from Figma
+      ),
+      showSelectedLabels: true, // Showing selected labels
+      showUnselectedLabels: false, // Hiding unselected labels
+      type: BottomNavigationBarType
+          .fixed, // Fixed to accommodate absolute positioning
+      elevation: 0, 
     ),
-
-    
   );
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
-import 'package:mool/screens/reset_password_screen.dart';
+import 'package:mool/screens/auth/reset_password_screen.dart';
 import 'package:mool/widgets/custum_app_bar.dart';
-import 'package:mool/widgets/verification_code_field.dart';
+import 'package:mool/widgets/auth_widgets/verification_code_field.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});

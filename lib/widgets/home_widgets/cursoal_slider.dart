@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:mool/widgets/image_slider.dart';
-import 'package:mool/widgets/video_slider.dart';
+import 'package:mool/widgets/home_widgets/image_slider.dart';
+import 'package:mool/widgets/home_widgets/video_slider.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
   final List<String> mediaPaths;

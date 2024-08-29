@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/screens/catagrios/categories_screen.dart';
 import 'package:mool/screens/home/main_home_screen.dart';
-import 'package:mool/widgets/home_bottom_widget.dart';
+import 'package:mool/widgets/home_widgets/home_bottom_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

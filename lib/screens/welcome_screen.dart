@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/constants/titles.dart';
-import 'package:mool/screens/create_account_screen.dart';
+import 'package:mool/screens/auth/create_account_screen.dart';
 import 'package:mool/widgets/Custom_elevated_button.dart';
-import 'sign_in_screen.dart';
+import 'auth/sign_in_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
