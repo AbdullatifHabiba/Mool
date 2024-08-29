@@ -40,12 +40,14 @@ class _ProductItemState extends State<ProductItem> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Image Section
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
                   widget.imagePath,
                   width: 190,
@@ -58,7 +60,8 @@ class _ProductItemState extends State<ProductItem> {
                   top: 10,
                   left: 0,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(0),
@@ -86,7 +89,9 @@ class _ProductItemState extends State<ProductItem> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      border: Border.all(color: isFavorite ? Colors.red : Colors.transparent, width: 2),
+                      border: Border.all(
+                          color: isFavorite ? Colors.red : Colors.transparent,
+                          width: 2),
                     ),
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -98,65 +103,67 @@ class _ProductItemState extends State<ProductItem> {
               ),
             ],
           ),
-
-          // Details Section
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+          Stack(children: [
+            // Details Section
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    if (widget.isBest)
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (widget.isBest)
+                        Text(
+                          widget.price,
+                          style: const TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 12,
+                          ),
+                        ),
                       Text(
-                        widget.price,
+                        widget.isBest
+                            ? ' ${(double.parse(widget.price) * 0.8).toStringAsFixed(2)} SAR'
+                            : '${widget.price} SAR',
                         style: const TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                    Text(
-                      widget.isBest
-                          ? ' ${(double.parse(widget.price) * 0.8).toStringAsFixed(2)} SAR'
-                          : '${widget.price} SAR',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // "Add" Button Section
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              width: 30,
-              height: 30,
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: Color(0xFF292D32),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomRight: Radius.circular(8),
-                ),
+                    ],
+                  ),
+                ],
               ),
-              child: const Icon(Icons.add, color: Colors.white, size: 16),
             ),
-          ),
+
+            // "Add" Button Section
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 40,
+                height: 40,
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF292D32),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
+                ),
+                child: const Icon(Icons.add, color: Colors.white, size: 16),
+              ),
+            ),
+          ])
         ],
       ),
     );

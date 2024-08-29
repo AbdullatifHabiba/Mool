@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/screens/home/list_items_screen.dart';
 import 'package:mool/widgets/home_widgets/cursoal_slider.dart';
 import 'package:mool/widgets/home_widgets/delivery_banner.dart';
 import 'package:mool/widgets/home_widgets/top_brands.dart';
@@ -11,27 +12,33 @@ class MainHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          buildTopBrandsSection(),
-          const DeliveryBanner(),
-          const CarouselSliderWidget(
-            mediaPaths: [
-              Images.background,
-              Images.video,
-              Images.person,
-            ],
-          ),
-          const CategoryTiles(),
-          const TopBrands(),
-          const DiscountBanner(),
-          buildSectionTitle('New Arrival'),
-          buildProductListView(false),
-          const SizedBox(height: 16),
-          buildSectionTitle('Best Sellers'),
-          buildProductListView(true),
-          const SizedBox(height: 80),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildTopBrandsSection(),
+            const DeliveryBanner(),
+            const CarouselSliderWidget(
+              mediaPaths: [
+                Images.background,
+                Images.video,
+                Images.person,
+              ],
+            ),
+            const SizedBox(height: 16),
+            const CategoryTiles(),
+            const SizedBox(height: 16),
+            const TopBrands(),
+            const DiscountBanner(),
+            buildSectionTitle('New Arrival', context),
+            buildProductListView(false),
+            const SizedBox(height: 16),
+            buildSectionTitle('Best Sellers', context),
+            buildProductListView(true),
+            const SizedBox(height: 80),
+          ],
+        ),
       ),
     );
   }
@@ -55,7 +62,7 @@ class MainHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSectionTitle(String title) {
+  Widget buildSectionTitle(String title, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -65,7 +72,15 @@ class MainHomeScreen extends StatelessWidget {
             title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          TextButton(onPressed: () {}, child: const Text('See All'))
+          TextButton(onPressed: () {
+            // Navigate to the product list screen
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ListItemsScreen(showBestSellers: title=='Best Sellers'?true:false),
+              ),
+            );
+
+          }, child: const Text('See All'))
         ],
       ),
     );
@@ -90,7 +105,7 @@ class MainHomeScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(imagePath, width: 48, height: 48),
           Text(title, style: const TextStyle(fontSize: 16, color: Colors.black)),

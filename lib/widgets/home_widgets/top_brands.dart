@@ -47,7 +47,7 @@ class CategoryTile extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Text(
         title,
-        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
       ),
     );
   }
@@ -68,21 +68,23 @@ class TopBrands extends StatelessWidget {
         children: [
           Text('Top Brands', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
           SizedBox(height: 10),
-          Wrap(
-            spacing: 20,
-            runSpacing: 10,
-            children: [
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-              BrandLogo(logoUrl: Images.brand),
-
-
-            ],
+          Center(
+            child: Wrap(
+              spacing: 15,
+              runSpacing: 10,
+              children: [
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+                BrandLogo(logoUrl: Images.brand),
+            
+            
+              ],
+            ),
           ),
         ],
       ),

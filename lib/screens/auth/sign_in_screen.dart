@@ -108,6 +108,12 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           const Text('Don\'t Have account ?'),
                           TextButton(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.green,
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>

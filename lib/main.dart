@@ -40,7 +40,7 @@ ThemeData appTheme() {
     // TextButton theme
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.green,
+        foregroundColor:const Color.fromARGB(100, 13, 14, 15),
         textStyle: const TextStyle(fontSize: 16),
       ),
     ),
@@ -52,6 +52,10 @@ ThemeData appTheme() {
         foregroundColor: Colors.white,
         textStyle: const TextStyle(fontSize: 18),
         padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        side:const BorderSide(color: Colors.black),
       ),
     ),
 
