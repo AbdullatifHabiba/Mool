@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/constants/titles.dart';
 import 'package:mool/screens/auth/create_account_screen.dart';
+import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 import 'package:mool/widgets/auth_widgets/social_icons_widget.dart';
 import '../../widgets/custom_text_field.dart';
@@ -92,7 +93,11 @@ class SignInScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle Sign Up
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
                         },
                         child: const Text(
                           'Sign in',

@@ -6,4 +6,6 @@ class Images {
   static const String verfiy = 'assets/images/freepik.png';
   static const String frame = 'assets/images/Frame.png';
   static const String video = 'assets/slide.gif';
+  static const String accessories = 'assets/images/accessories.jpg';
+  static const String brand = 'assets/images/brand.png';
 }
