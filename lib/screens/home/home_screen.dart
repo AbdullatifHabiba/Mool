@@ -4,8 +4,10 @@ import 'package:mool/screens/Cart/cart_screen.dart';
 import 'package:mool/screens/Discover/discover_screen.dart';
 import 'package:mool/screens/catagrios/categories_screen.dart';
 import 'package:mool/screens/home/main_home_screen.dart';
+import 'package:mool/screens/notification_screen.dart';
 import 'package:mool/screens/profile/profile_screen.dart';
 import 'package:mool/widgets/home_widgets/home_bottom_widget.dart';
+import 'package:mool/widgets/home_widgets/search_cutom_input.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,50 +54,52 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(100.0),
-      child: Column(
-        children: [
-          AppBar(
-            backgroundColor: const Color(0xFF292D32),
-            automaticallyImplyLeading: false,
-            title: Image.asset(Images.logo, height: 50),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.notifications),
-                onPressed: () {},
-              ),
-            ],
-          ),
-          Container(
-            color: const Color(0xFF292D32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildGenderTab('WOMEN', 0),
-                _buildGenderTab('MEN', 1),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100.0),
+        child: Column(
+          children: [
+            AppBar(
+              backgroundColor: const Color(0xFF292D32),
+              automaticallyImplyLeading: false,
+              title: Image.asset(Images.logo, height: 50),
+              actions: [
+                const ExpandableSearchBar(),
+                IconButton(
+                  icon: const Icon(Icons.notifications),
+                  onPressed: () {
+                    // Handle notification tap
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const NotificationsScreen()));
+                  },
+                ),
               ],
             ),
+            Container(
+              color: const Color(0xFF292D32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildGenderTab('WOMEN', 0),
+                  _buildGenderTab('MEN', 1),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Stack(
+        children: [
+          _currentScreen, // Your main screen content
+          CustomBottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: _onTabTapped,
           ),
         ],
       ),
-    ),
-    body: Stack(
-      children: [
-        _currentScreen, // Your main screen content
-        CustomBottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: _onTabTapped,
-        ),
-      ],
-    ),
-  );
-}
+    );
+  }
+
   Widget _buildGenderTab(String label, int index) {
     return GestureDetector(
       onTap: () => _onGenderTabTapped(index),
