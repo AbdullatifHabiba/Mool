@@ -15,6 +15,7 @@ class ProductItem extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProductItemState createState() => _ProductItemState();
 }
 
@@ -50,7 +51,7 @@ class _ProductItemState extends State<ProductItem> {
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
                   widget.imagePath,
-                  width: 190,
+                  // width: 190,
                   height: 180,
                   fit: BoxFit.cover,
                 ),

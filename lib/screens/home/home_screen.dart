@@ -13,32 +13,38 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   int _selectedTabIndex = 1; // To keep track of selected "WOMEN" or "MEN"
-  Widget _currentScreen = const MainHomeScreen(); // Initial screen
 
-  final List<Widget> _children = [
-    const MainHomeScreen(),
-    const CategoriesScreen(),
-    const DiscoverScreen(),
-    const CartScreen(),
-    const ProfileScreen(),
-  ];
+  late final List<Widget> _children;
+  late Widget _currentScreen;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _children = [
+      MainHomeScreen(
+        buildGenderTab: _buildGenderTab,
+      ),
+      const CategoriesScreen(),
+      const DiscoverScreen(),
+      const CartScreen(),
+      const ProfileScreen(),
+    ];
+
+    _currentScreen = _children[_currentIndex];
+  }
 
   void _onTabTapped(int index) {
-    // When tapping on the bottom navigation, navigate to a new screen
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => _children[index]),
-    ).then((value) {
-      // When returning from a pushed route, reset the index to 0
-      setState(() {
-        _currentIndex = 0;
-      });
+    setState(() {
+      _currentIndex = index;
+      _currentScreen = _children[index];
     });
   }
 
@@ -48,14 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedTabIndex = index;
       _currentScreen = index == 0
           ? const Center(child: Text('WOMEN Category Screen'))
-          : const MainHomeScreen();
+          : MainHomeScreen(
+              buildGenderTab: _buildGenderTab,
+            );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+        appBar: _currentIndex==0?
+         PreferredSize(
         preferredSize: const Size.fromHeight(100.0),
         child: Column(
           children: [
@@ -87,14 +96,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-      ),
-      body: Stack(
+      ):null,
+    
+            body: Stack(
         children: [
           _currentScreen, // Your main screen content
-          CustomBottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: _onTabTapped,
-          ),
+          if (_currentIndex != 2)
+            Positioned(
+              left: 20.0,
+              right: 20.0,
+              bottom: 20.0,
+              child: CustomBottomNavigationBar(
+                currentIndex: _currentIndex,
+                onTap: _onTabTapped,
+              ),
+            ),
         ],
       ),
     );

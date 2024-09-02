@@ -13,7 +13,10 @@ class FilterScreen extends StatelessWidget {
             onPressed: () {
               // Handle cancel action
             },
-            child: const Text('Cancel'),
+            child: const Text('Cancel',
+                style: TextStyle(
+                  color: Colors.white,
+                )),
           ),
         ],
       ),

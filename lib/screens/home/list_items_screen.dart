@@ -137,28 +137,35 @@ class ListItemsScreen extends StatelessWidget {
 
   // Helper to build bottom action buttons
   Widget buildBottomAction(String title, IconData icon,
-      {required BuildContext context}) {
-    return GestureDetector(
-      onTap: () {
-        // Handle action
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => title == 'SORT'
-                ? const SortingScreen()
-                : const FilterScreen()));
-      },
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.black),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+    {required BuildContext context}) {
+  return GestureDetector(
+    onTap: () {
+      if (title == 'SORT') {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => const SortingScreen(),
+        );
+      } else {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const FilterScreen(),
           ),
-        ],
-      ),
-    );
-  }
+        );
+      }
+    },
+    child: Row(
+      children: [
+        Icon(icon, color: Colors.black),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }

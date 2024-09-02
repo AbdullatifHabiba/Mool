@@ -7,37 +7,47 @@ import 'package:mool/widgets/home_widgets/top_brands.dart';
 import 'package:mool/widgets/home_widgets/product_item.dart';
 
 class MainHomeScreen extends StatelessWidget {
-  const MainHomeScreen({super.key});
+  const MainHomeScreen({
+    super.key,
+    // intializing the buildGenderTab
+    required  this.buildGenderTab,
+    
+   
+  });
+  final  Function(String, int) buildGenderTab;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            buildTopBrandsSection(),
-            const DeliveryBanner(),
-            const CarouselSliderWidget(
-              mediaPaths: [
-                Images.background,
-                Images.video,
-                Images.person,
-              ],
-            ),
-            const SizedBox(height: 16),
-            const CategoryTiles(),
-            const SizedBox(height: 16),
-            const TopBrands(),
-            const DiscountBanner(),
-            buildSectionTitle('New Arrival', context),
-            buildProductListView(false),
-            const SizedBox(height: 16),
-            buildSectionTitle('Best Sellers', context),
-            buildProductListView(true),
-            const SizedBox(height: 80),
-          ],
+    return Scaffold(
+      
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildTopBrandsSection(),
+              const DeliveryBanner(),
+              const CarouselSliderWidget(
+                mediaPaths: [
+                  Images.background,
+                  Images.video,
+                  Images.person,
+                ],
+              ),
+              const SizedBox(height: 16),
+              const CategoryTiles(),
+              const SizedBox(height: 16),
+              const TopBrands(),
+              const DiscountBanner(),
+              buildSectionTitle('New Arrival', context),
+              buildProductListView(false),
+              const SizedBox(height: 16),
+              buildSectionTitle('Best Sellers', context),
+              buildProductListView(true),
+              const SizedBox(height: 80),
+            ],
+          ),
         ),
       ),
     );

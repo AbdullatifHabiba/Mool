@@ -8,4 +8,5 @@ class Images {
   static const String video = 'assets/slide.gif';
   static const String accessories = 'assets/images/accessories.jpg';
   static const String brand = 'assets/images/brand.png';
+  static const String category = 'assets/images/tshirt.jpg';
 }
