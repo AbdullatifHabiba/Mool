@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:mool/widgets/custom_radio_button.dart';
-class CountrySelectionSheet extends StatelessWidget {
+
+class CountrySelectionSheet extends StatefulWidget {
   final String? selectedCountry;
   final ValueChanged<String?> onCountrySelected;
 
-  const CountrySelectionSheet({super.key, 
+  const CountrySelectionSheet({
+    super.key,
     required this.selectedCountry,
     required this.onCountrySelected,
   });
+
+  @override
+  _CountrySelectionSheetState createState() => _CountrySelectionSheetState();
+}
+
+class _CountrySelectionSheetState extends State<CountrySelectionSheet> {
+  late String? _selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCountry = widget.selectedCountry;
+  }
+
+  void _selectCountry(String? country) {
+    setState(() {
+      _selectedCountry = country;
+    });
+    widget.onCountrySelected(country);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +54,20 @@ class CountrySelectionSheet extends StatelessWidget {
                 CustomRadioButton(
                   title: '🇸🇦 Saudi Arabia',
                   value: 'Saudi Arabia',
-                  groupValue: selectedCountry,
-                  onChanged: onCountrySelected,
+                  groupValue: _selectedCountry,
+                  onChanged: _selectCountry,
                 ),
                 CustomRadioButton(
                   title: '🇦🇪 United Arab Emirates',
                   value: 'United Arab Emirates',
-                  groupValue: selectedCountry,
-                  onChanged: onCountrySelected,
+                  groupValue: _selectedCountry,
+                  onChanged: _selectCountry,
                 ),
                 CustomRadioButton(
                   title: '🇪🇬 Egypt',
                   value: 'Egypt',
-                  groupValue: selectedCountry,
-                  onChanged: onCountrySelected,
+                  groupValue: _selectedCountry,
+                  onChanged: _selectCountry,
                 ),
                 // Add more countries as needed
               ],
@@ -70,4 +92,3 @@ class CountrySelectionSheet extends StatelessWidget {
     );
   }
 }
-

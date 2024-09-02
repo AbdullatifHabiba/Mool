@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/screens/home/home_screen.dart';
+import 'package:mool/widgets/custom_back_arrow.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -15,6 +17,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categories'),
+        leading:CustomBackArrow(
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
+     
       ),
       body: GridView.count(
         crossAxisCount: 3,

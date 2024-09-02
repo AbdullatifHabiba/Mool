@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -9,7 +10,16 @@ class DiscoverScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Discover'), leading: const CustomBackArrow()),
+          title: const Text('Discover'), 
+          leading:CustomBackArrow(
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
+      ),
       body: Stack(
         children: [
           // Background GIF

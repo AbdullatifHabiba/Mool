@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const CategoriesScreen(),
       const DiscoverScreen(),
       const CartScreen(),
-      const ProfileScreen(),
+      const MyAccountScreen(),
     ];
 
     _currentScreen = _children[_currentIndex];
