@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/states/items_list.dart';
 
-class SortingScreen extends StatelessWidget {
+class SortingScreen extends ConsumerWidget {
   const SortingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedSort = ref.watch(sortProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sorting'),
@@ -12,22 +16,24 @@ class SortingScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          buildSortingOption('Price: Low to High'),
-          buildSortingOption('Price: High to Low'),
-          buildSortingOption('New Arrival'),
-          buildSortingOption('Rating: High to Low'),
+          buildSortingOption(context, ref, 'Price: Low to High', selectedSort),
+          buildSortingOption(context, ref, 'Price: High to Low', selectedSort),
+          buildSortingOption(context, ref, 'New Arrival', selectedSort),
+          buildSortingOption(context, ref, 'Rating: High to Low', selectedSort),
         ],
       ),
     );
   }
 
-  Widget buildSortingOption(String title) {
+  Widget buildSortingOption(BuildContext context, WidgetRef ref, String title, String selectedSort) {
     return RadioListTile(
       title: Text(title),
       value: title,
-      groupValue: '', // Provide selected value
-      onChanged: (newValue) {
-        // Handle sorting option change
+      groupValue: selectedSort,
+      onChanged: (value) {
+        ref.read(sortProvider.notifier).setSort(title);
+        ref.read(productListProvider.notifier).sortProducts(title);
+        Navigator.of(context).pop();
       },
     );
   }

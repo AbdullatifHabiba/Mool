@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/screens/home/list_items_screen.dart';
+import 'package:mool/states/items_list.dart';
 import 'package:mool/widgets/home_widgets/cursoal_slider.dart';
 import 'package:mool/widgets/home_widgets/delivery_banner.dart';
 import 'package:mool/widgets/home_widgets/top_brands.dart';
 import 'package:mool/widgets/home_widgets/product_item.dart';
 
-class MainHomeScreen extends StatelessWidget {
+class MainHomeScreen extends ConsumerWidget {
   const MainHomeScreen({
     super.key,
-    // intializing the buildGenderTab
-    required  this.buildGenderTab,
-    
-   
+    required this.buildGenderTab,
   });
-  final  Function(String, int) buildGenderTab;
+
+  final Function(String, int) buildGenderTab;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Use the providers
+    // final selectedGenderTab = ref.watch(selectedGenderTabProvider);
+    // final isBestSellers = ref.watch(isBestSellersProvider);
+
     return Scaffold(
-      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -40,11 +43,11 @@ class MainHomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
               const TopBrands(),
               const DiscountBanner(),
-              buildSectionTitle('New Arrival', context),
-              buildProductListView(false),
+              buildSectionTitle('New Arrival', context, ref),
+              buildProductListView(ref, false),
               const SizedBox(height: 16),
-              buildSectionTitle('Best Sellers', context),
-              buildProductListView(true),
+              buildSectionTitle('Best Sellers', context, ref),
+              buildProductListView(ref, true),
               const SizedBox(height: 80),
             ],
           ),
@@ -72,7 +75,7 @@ class MainHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSectionTitle(String title, BuildContext context) {
+  Widget buildSectionTitle(String title, BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -82,31 +85,43 @@ class MainHomeScreen extends StatelessWidget {
             title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          TextButton(onPressed: () {
-            // Navigate to the product list screen
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ListItemsScreen(showBestSellers: title=='Best Sellers'?true:false),
-              ),
-            );
-
-          }, child: const Text('See All'))
+          TextButton(
+            onPressed: () {
+              // Set the state of the "Best Sellers" or "New Arrivals" based on the title
+              ref.read(isBestSellersProvider.notifier).state =
+                  title == 'Best Sellers';
+              // Navigate to the product list screen
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ListItemsScreen(
+                    showBestSellers: ref.read(isBestSellersProvider),
+                  ),
+                ),
+              );
+            },
+            child: const Text('See All'),
+          ),
         ],
       ),
     );
   }
 
-  Widget buildProductListView(bool isBest) {
+  Widget buildProductListView(WidgetRef ref, bool isBest) {
+    final products = ref.watch(productListProvider);
     return SizedBox(
       height: 300,
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          ProductItem(title: 'Red Dress', imagePath: Images.accessories, price: '2500', isBest: isBest),
-          ProductItem(title: 'Yellow Dress', imagePath: Images.brand, price: '2500', isBest: isBest),
-          ProductItem(title: 'Yellow Dress', imagePath: Images.accessories, price: '2500', isBest: isBest),
-          ProductItem(title: 'Red Dress', imagePath: Images.brand, price: '2500', isBest: isBest),
-        ],
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return ProductItem(
+            title: product.title,
+            imagePath: product.imagePath,
+            price: product.price.toString(),
+            isBest: isBest,
+          );
+        },
       ),
     );
   }

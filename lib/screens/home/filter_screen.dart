@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/states/items_list.dart';
 
-class FilterScreen extends StatelessWidget {
+class FilterScreen extends ConsumerWidget {
   const FilterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filters = ref.watch(filterProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter'),
         actions: [
           TextButton(
             onPressed: () {
-              // Handle cancel action
+              Navigator.of(context).pop();
             },
-            child: const Text('Cancel',
-                style: TextStyle(
-                  color: Colors.white,
-                )),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
@@ -25,12 +31,12 @@ class FilterScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                buildFilterOption('Category'),
-                buildFilterOption('Brand'),
-                buildFilterOption('Price'),
-                buildFilterOption('Product Rating'),
-                buildFilterOption('Size'),
-                buildFilterOption('Color'),
+                buildFilterOption(context, ref, 'Category', 'All', filters['category'] == 'All'),
+                buildFilterOption(context, ref, 'Category', 'Tops', filters['category'] == 'Tops'),
+                buildFilterOption(context, ref, 'Category', 'Dresses', filters['category'] == 'Dresses'),
+                buildFilterOption(context, ref, 'Category', 'Bottoms', filters['category'] == 'Bottoms'),
+                buildFilterOption(context, ref, 'Category', 'T-Shirts', filters['category'] == 'T-Shirts'),
+               
               ],
             ),
           ),
@@ -41,13 +47,24 @@ class FilterScreen extends StatelessWidget {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    // Handle reset action
+                    ref.read(filterProvider.notifier).setFilter('category', 'All');
+                   
+                    ref.read(productListProvider.notifier).filterProducts(
+                      category: 'All',
+                    
+                    );
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Reset'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle apply action
+                    final filterNotifier = ref.read(filterProvider.notifier);
+                    ref.read(productListProvider.notifier).filterProducts(
+                      category: filterNotifier.state['category'],
+                    
+                    );
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Apply'),
                 ),
@@ -59,12 +76,17 @@ class FilterScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFilterOption(String title) {
+  Widget buildFilterOption(BuildContext context, WidgetRef ref, String filterType, String title, bool isSelected) {
     return ListTile(
       title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios),
+      trailing: isSelected ? const Icon(Icons.check, color: Colors.blue) : null,
       onTap: () {
-        // Handle filter option tap
+        ref.read(filterProvider.notifier).setFilter(filterType.toLowerCase(), title);
+        ref.read(productListProvider.notifier).filterProducts(
+          category: filterType == 'Category' ? title : ref.read(filterProvider)['category'],
+        
+        );
+        Navigator.of(context).pop();
       },
     );
   }

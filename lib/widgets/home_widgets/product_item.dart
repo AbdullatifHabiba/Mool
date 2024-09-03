@@ -51,7 +51,7 @@ class _ProductItemState extends State<ProductItem> {
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
                   widget.imagePath,
-                  // width: 190,
+                   width: double.infinity,
                   height: 180,
                   fit: BoxFit.cover,
                 ),

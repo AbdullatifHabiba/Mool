@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
-  runApp(const MoolApp());
+  runApp(const ProviderScope(child: MoolApp()));
 }
 
 class MoolApp extends StatelessWidget {

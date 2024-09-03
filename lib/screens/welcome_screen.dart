@@ -98,111 +98,113 @@ class WelcomeScreen extends StatelessWidget {
                       topRight: Radius.circular(30.0),
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(
-                        Titles.getYourDreamItems,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          height: 1.5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text(
+                          Titles.getYourDreamItems,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            height: 1.5,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      SizedBox(height: size.height * 0.02), // 2% of screen height
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomElevatedButton(
-                            text: Titles.signUp,
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
+                        SizedBox(height: size.height * 0.02), // 2% of screen height
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomElevatedButton(
+                              text: Titles.signUp,
+                              backgroundColor: Colors.white,
+                              textColor: Colors.black,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CreateAccountScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(width: size.width * 0.05), // 5% of screen width
+                            CustomElevatedButton(
+                              text: Titles.signIn,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignInScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.02), // 2% of screen height
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const CreateAccountScreen(),
-                                ),
-                              );
+                              // Handle Continue as Guest
                             },
-                          ),
-                          SizedBox(width: size.width * 0.05), // 5% of screen width
-                          CustomElevatedButton(
-                            text: Titles.signIn,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignInScreen(),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'Continue as ',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 ),
-                              );
-                            },
+                                Text(
+                                  'Guest',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.02), // 2% of screen height
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: () {
-                            // Handle Continue as Guest
-                          },
-                          child: const Row(
+                        ),
+                        SizedBox(height: size.height * 0.01), // 1% of screen height
+                        Container(
+                          alignment: Alignment.center,
+                          child: Column(
                             children: [
-                              Text(
-                                'Continue as ',
+                              const Text(
+                                Titles.continuingAgree,
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: Colors.grey,
                                 ),
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                               ),
-                              Text(
-                                'Guest',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black,
+                              TextButton(
+                                onPressed: () {
+                                  // Handle Privacy Policy
+                                },
+                                child: const Text(
+                                  Titles.termsOfService,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
-                                textAlign: TextAlign.left,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.01), // 1% of screen height
-                      Container(
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            const Text(
-                              Titles.continuingAgree,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.grey,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                // Handle Privacy Policy
-                              },
-                              child: const Text(
-                                Titles.termsOfService,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
