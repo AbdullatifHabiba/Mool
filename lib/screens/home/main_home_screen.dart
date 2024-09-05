@@ -107,7 +107,14 @@ class MainHomeScreen extends ConsumerWidget {
   }
 
   Widget buildProductListView(WidgetRef ref, bool isBest) {
-    final products = ref.watch(productListProvider);
+    // get best prouducts or new arrivals based on the flag
+    final products = ref.watch(productListProvider).where((product) {
+      if (isBest) {
+        return product.isBest;
+      } else {
+        return product.isNew;
+      }
+    }).toList();
     return SizedBox(
       height: 300,
       child: ListView.builder(
@@ -115,12 +122,7 @@ class MainHomeScreen extends ConsumerWidget {
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
-          return ProductItem(
-            title: product.title,
-            imagePath: product.imagePath,
-            price: product.price.toString(),
-            isBest: isBest,
-          );
+          return ProductItem(product: product);
         },
       ),
     );

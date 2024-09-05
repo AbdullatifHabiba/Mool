@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mool/screens/home/home_screen.dart';
+import 'package:mool/screens/home/my_list_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -51,32 +52,48 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   Widget buildAccountOption(BuildContext context, String title, IconData icon, [bool hasBadge = false]) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.black54),
-      title: Text(title),
-      trailing: hasBadge
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(_selectedCountry.substring(0, 2), style: const TextStyle(color: Colors.green)),
-                const Icon(Icons.chevron_right, color: Colors.black54),
-              ],
-            )
-          : const Icon(Icons.chevron_right, color: Colors.black54),
-      onTap: () {
-        if (title == 'Country') {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => SelectCountryModal(
-              selectedCountry: _selectedCountry,
-              onCountrySelected: _updateSelectedCountry,
-            ),
-          );
-        }
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.black54),
+        title: Text(title),
+        tileColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        trailing: hasBadge
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(_selectedCountry.substring(0, 2), style: const TextStyle(color: Colors.green)),
+                  const Icon(Icons.chevron_right, color: Colors.black54),
+                ],
+              )
+            : const Icon(Icons.chevron_right, color: Colors.black54),
+        onTap: () {
+          if (title == 'Country') {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => SelectCountryModal(
+                selectedCountry: _selectedCountry,
+                onCountrySelected: _updateSelectedCountry,
+              ),
+            );
+          }else if(title == 'Logout'){
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (Route<dynamic> route) => false,);
+          }else if(title=='My Favorite'){
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const MyListItemsScreen()));
+          }
+          
+        },
+      ),
     );
   }
 }
+// country modal handler
 
 class SelectCountryModal extends StatefulWidget {
   final String selectedCountry;

@@ -102,15 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _currentScreen, // Your main screen content
           if (_currentIndex != 2)
-            Positioned(
-              left: 20.0,
-              right: 20.0,
-              bottom: 20.0,
-              child: CustomBottomNavigationBar(
+         CustomBottomNavigationBar(
                 currentIndex: _currentIndex,
                 onTap: _onTabTapped,
               ),
-            ),
+            
         ],
       ),
     );

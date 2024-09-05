@@ -30,10 +30,14 @@ class ProductListNotifier extends StateNotifier<List<Product>> {
 
   void filterProducts({
     String? category,
+    bool? isBest,
+    bool? isNew,
   }) {
     state = allProducts.where((product) {
       final matchesCategory = category == null || category == 'All' || product.category == category;
-      return matchesCategory;
+      final matchesBest = isBest == null || product.isBest == isBest;
+      final matchesNew = isNew == null || product.isNew == isNew;
+      return matchesCategory && matchesBest && matchesNew;
     }).toList();
   }
 
@@ -49,9 +53,6 @@ class ProductListNotifier extends StateNotifier<List<Product>> {
       case 'Rating: High to Low':
         sortedProducts.sort((a, b) => b.rating.compareTo(a.rating));
         break;
-      case 'New Arrival':
-        sortedProducts.sort((a, b) => b.isNew ? 1 : 0);
-        break;
     }
     state = sortedProducts;
   }
@@ -64,11 +65,19 @@ class FilterNotifier extends StateNotifier<Map<String, String>> {
   void setFilter(String key, String value) {
     state = {...state, key: value};
   }
-}
 
-// Providers
-final filterProvider =
-    StateNotifierProvider<FilterNotifier, Map<String, String>>((ref) => FilterNotifier());
+  void resetFilters() {
+    state = {'category': 'All'};
+  }
+
+  String getFilter(String key) {
+    return state[key] ?? 'All';
+  }
+
+  Map<String, String> getFilters() {
+    return state;
+  }
+}
 
 // State for managing selected sorting option
 class SortNotifier extends StateNotifier<String> {
@@ -80,9 +89,15 @@ class SortNotifier extends StateNotifier<String> {
 }
 
 // Providers
-final productListProvider =
-    StateNotifierProvider<ProductListNotifier, List<Product>>((ref) {
-  // Sample product list
+final filterProvider = StateNotifierProvider<FilterNotifier, Map<String, String>>(
+    (ref) => FilterNotifier());
+
+final sortProvider = StateNotifierProvider<SortNotifier, String>(
+    (ref) => SortNotifier());
+
+// Sample product list
+final productListProvider = StateNotifierProvider<ProductListNotifier, List<Product>>(
+    (ref) {
   final products = [
     Product(
         title: 'Elegant Dress',
@@ -91,7 +106,7 @@ final productListProvider =
         isBest: true,
         category: 'Dresses',
         rating: 4.5,
-        isNew: true),
+        isNew: false),
     Product(
         title: 'Casual Shirt',
         imagePath: Images.accessories,
@@ -107,7 +122,7 @@ final productListProvider =
         isBest: true,
         category: 'Bottoms',
         rating: 4.8,
-        isNew: true),
+        isNew: false),
     Product(
         title: 'T-Shirt',
         imagePath: Images.accessories,
@@ -120,7 +135,7 @@ final productListProvider =
         title: 'Skirt',
         imagePath: Images.accessories,
         price: 250,
-        isBest: true,
+        isBest: false,
         category: 'Bottoms',
         rating: 4.2,
         isNew: true),
@@ -128,10 +143,10 @@ final productListProvider =
         title: 'Blouse',
         imagePath: Images.accessories,
         price: 2100,
-        isBest: true,
+        isBest: false,
         category: 'Tops',
         rating: 4.1,
-        isNew: false),
+        isNew: true),
     Product(
         title: 'Jacket',
         imagePath: Images.accessories,
@@ -147,16 +162,41 @@ final productListProvider =
         isBest: false,
         category: 'Bottoms',
         rating: 4.0,
-        isNew: false),
+        isNew: true),
   ];
   return ProductListNotifier(products);
 });
-
-final sortProvider =
-    StateNotifierProvider<SortNotifier, String>((ref) => SortNotifier());
 
 // State provider to manage the selected tab in the home screen
 final selectedGenderTabProvider = StateProvider<String>((ref) => 'Women');
 
 // State provider for managing the product list (Best Sellers or New Arrivals)
 final isBestSellersProvider = StateProvider<bool>((ref) => false);
+
+// Favorite products provider
+class FavoriteProductsNotifier extends StateNotifier<List<Product>> {
+  FavoriteProductsNotifier() : super([]);
+
+  void toggleFavorite(Product product) {
+    if (state.contains(product)) {
+      state = state.where((p) => p != product).toList();
+    } else {
+      state = [...state, product];
+    }
+  }
+
+  bool isFavorite(Product product) {
+    return state.contains(product);
+  }
+
+  void filterFavoriteProducts({required String category}) {
+    state = state.where((product) {
+      final matchesCategory = category == 'All' || product.category == category;
+      return matchesCategory;
+    }).toList();
+  }
+}
+
+final favoriteProductsProvider =
+    StateNotifierProvider<FavoriteProductsNotifier, List<Product>>(
+        (ref) => FavoriteProductsNotifier());

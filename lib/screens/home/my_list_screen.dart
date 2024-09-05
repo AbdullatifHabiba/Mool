@@ -1,39 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mool/screens/home/filter_screen.dart';
 import 'package:mool/screens/home/search_screen.dart';
-import 'package:mool/screens/home/sort_screen.dart';
 import 'package:mool/states/items_list.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 import 'package:mool/widgets/home_widgets/product_item.dart';
 
-class ListItemsScreen extends ConsumerWidget {
-  final bool showBestSellers;
-
-  const ListItemsScreen({super.key, required this.showBestSellers});
+class MyListItemsScreen extends ConsumerWidget {
+  const MyListItemsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref.watch(productListProvider);
+    final favoriteProducts = ref.watch(favoriteProductsProvider);
     final filters = ref.watch(filterProvider);
-
-    // Filter products based on showBestSellers flag
-    final filteredProducts = products.where((product) {
-      if (showBestSellers) {
-        return product.isBest;
-      } else {
-        return product.isNew;
-      }
-    }).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(showBestSellers ? 'Best Sellers' : 'New Arrivals'),
-        leading: CustomBackArrow(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        title: const Text('My List'),
+        leading: const CustomBackArrow(),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -54,8 +37,8 @@ class ListItemsScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   buildCategoryFilter(
-                      context, ref, 'All', filters['category'] == 'All'),
-                  buildCategoryFilter(
+                      context, ref, 'All', true), 
+                        buildCategoryFilter(
                       context, ref, 'Tops', filters['category'] == 'Tops'),
                   buildCategoryFilter(context, ref, 'Dresses',
                       filters['category'] == 'Dresses'),
@@ -72,40 +55,8 @@ class ListItemsScreen extends ConsumerWidget {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: buildProductListView(filteredProducts),
+            child: buildProductListView(favoriteProducts),
           )),
-
-          // Bottom Action Bar
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildBottomAction('SORT', Icons.sort,
-                    context: context, ref: ref),
-                const SizedBox(
-                  width: 100,
-                  child: Text(
-                    ' | ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                buildBottomAction('FILTER', Icons.filter_alt_outlined,
-                    context: context, ref: ref),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -134,7 +85,7 @@ class ListItemsScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref.read(filterProvider.notifier).setFilter('category', title);
-        ref.read(productListProvider.notifier).filterProducts(
+        ref.read(favoriteProductsProvider.notifier).filterFavoriteProducts(
               category: title,
             );
       },
@@ -153,39 +104,6 @@ class ListItemsScreen extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildBottomAction(String title, IconData icon,
-      {required BuildContext context, required WidgetRef ref}) {
-    return GestureDetector(
-      onTap: () {
-        if (title == 'SORT') {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => const SortingScreen(),
-          );
-        } else {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const FilterScreen(),
-            ),
-          );
-        }
-      },
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.black),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
       ),
     );
   }

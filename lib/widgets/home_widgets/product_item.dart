@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/states/items_list.dart';
 
-class ProductItem extends StatefulWidget {
-  final String title;
-  final String imagePath;
-  final String price;
-  final bool isBest;
+class ProductItem extends ConsumerWidget {
+  final Product product;
 
   const ProductItem({
     super.key,
-    required this.title,
-    required this.imagePath,
-    required this.price,
-    required this.isBest,
+    required this.product,
   });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ProductItemState createState() => _ProductItemState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteProducts = ref.watch(favoriteProductsProvider);
+    final isFavorite = favoriteProducts.contains(product);
 
-class _ProductItemState extends State<ProductItem> {
-  bool isFavorite = false; // State to manage favorite selection
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       width: 190,
       margin: const EdgeInsets.all(8.0),
@@ -50,13 +41,13 @@ class _ProductItemState extends State<ProductItem> {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
-                  widget.imagePath,
-                   width: double.infinity,
+                  product.imagePath,
+                  width: double.infinity,
                   height: 180,
                   fit: BoxFit.cover,
                 ),
               ),
-              if (widget.isBest)
+              if (product.isBest)
                 Positioned(
                   top: 10,
                   left: 0,
@@ -81,9 +72,7 @@ class _ProductItemState extends State<ProductItem> {
                 right: 10,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
+                    ref.read(favoriteProductsProvider.notifier).toggleFavorite(product);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(4),
@@ -113,7 +102,7 @@ class _ProductItemState extends State<ProductItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.title,
+                    product.title,
                     style: const TextStyle(
                       fontSize: 16,
                     ),
@@ -123,18 +112,18 @@ class _ProductItemState extends State<ProductItem> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      if (widget.isBest)
+                      if (product.isBest)
                         Text(
-                          widget.price,
+                          product.price.toString(),
                           style: const TextStyle(
                             decoration: TextDecoration.lineThrough,
                             fontSize: 12,
                           ),
                         ),
                       Text(
-                        widget.isBest
-                            ? ' ${(double.parse(widget.price) * 0.8).toStringAsFixed(2)} SAR'
-                            : '${widget.price} SAR',
+                        product.isBest
+                            ? ' ${(product.price * 0.8).toStringAsFixed(2)} SAR'
+                            : '${product.price} SAR',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

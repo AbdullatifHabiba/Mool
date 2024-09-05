@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/screens/home/filter_detiels_screen.dart';
 import 'package:mool/states/items_list.dart';
 
 class FilterScreen extends ConsumerWidget {
@@ -7,8 +8,6 @@ class FilterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filters = ref.watch(filterProvider);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter'),
@@ -31,12 +30,12 @@ class FilterScreen extends ConsumerWidget {
           Expanded(
             child: ListView(
               children: [
-                buildFilterOption(context, ref, 'Category', 'All', filters['category'] == 'All'),
-                buildFilterOption(context, ref, 'Category', 'Tops', filters['category'] == 'Tops'),
-                buildFilterOption(context, ref, 'Category', 'Dresses', filters['category'] == 'Dresses'),
-                buildFilterOption(context, ref, 'Category', 'Bottoms', filters['category'] == 'Bottoms'),
-                buildFilterOption(context, ref, 'Category', 'T-Shirts', filters['category'] == 'T-Shirts'),
-               
+                buildFilterOption(context, 'Category'),
+                buildFilterOption(context, 'Brand'),
+                buildFilterOption(context, 'Price'),
+                buildFilterOption(context, 'Product Rating'),
+                buildFilterOption(context, 'Size'),
+                buildFilterOption(context, 'Color'),
               ],
             ),
           ),
@@ -47,22 +46,20 @@ class FilterScreen extends ConsumerWidget {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    ref.read(filterProvider.notifier).setFilter('category', 'All');
-                   
-                    ref.read(productListProvider.notifier).filterProducts(
-                      category: 'All',
-                    
-                    );
+                    // Reset all filters logic here
+                    ref.read(filterProvider.notifier).resetFilters();
                     Navigator.of(context).pop();
                   },
                   child: const Text('Reset'),
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    // Apply filters logic here
                     final filterNotifier = ref.read(filterProvider.notifier);
                     ref.read(productListProvider.notifier).filterProducts(
-                      category: filterNotifier.state['category'],
-                    
+                      category: filterNotifier.getFilter('category'),
+                      isBest: filterNotifier.getFilter('isBest') == 'true',
+                      isNew: filterNotifier.getFilter('isNew') == 'true',
                     );
                     Navigator.of(context).pop();
                   },
@@ -76,17 +73,17 @@ class FilterScreen extends ConsumerWidget {
     );
   }
 
-  Widget buildFilterOption(BuildContext context, WidgetRef ref, String filterType, String title, bool isSelected) {
+  Widget buildFilterOption(BuildContext context, String filterType) {
     return ListTile(
-      title: Text(title),
-      trailing: isSelected ? const Icon(Icons.check, color: Colors.blue) : null,
+      title: Text(filterType),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
-        ref.read(filterProvider.notifier).setFilter(filterType.toLowerCase(), title);
-        ref.read(productListProvider.notifier).filterProducts(
-          category: filterType == 'Category' ? title : ref.read(filterProvider)['category'],
-        
+        // Navigate to the specific filter page
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => FilterDetailScreen(filterType: filterType),
+          ),
         );
-        Navigator.of(context).pop();
       },
     );
   }
