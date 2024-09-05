@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mool/screens/country_selection_screen.dart';
 import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/screens/home/my_list_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
@@ -11,9 +12,9 @@ class MyAccountScreen extends StatefulWidget {
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
-  String _selectedCountry = 'Saudi Arabia';
+  Map<String, String> _selectedCountry = {'name': 'Saudi Arabia', 'flag': '🇸🇦'};
 
-  void _updateSelectedCountry(String country) {
+  void _updateSelectedCountry(Map<String, String> country) {
     setState(() {
       _selectedCountry = country;
     });
@@ -65,7 +66,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(_selectedCountry.substring(0, 2), style: const TextStyle(color: Colors.green)),
+                  Text(_selectedCountry['flag']!),
+                  const SizedBox(width: 8),
                   const Icon(Icons.chevron_right, color: Colors.black54),
                 ],
               )
@@ -74,90 +76,28 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           if (title == 'Country') {
             showModalBottomSheet(
               context: context,
-              builder: (context) => SelectCountryModal(
-                selectedCountry: _selectedCountry,
-                onCountrySelected: _updateSelectedCountry,
+              builder: (context) => CountrySelectionSheet(
+                selectedCountry: _selectedCountry['name'],
+                onCountrySelected: (country) {
+                  if (country != null) {
+                    _updateSelectedCountry(country);
+                  }
+                   Navigator.pop(context);
+                },
               ),
             );
-          }else if(title == 'Logout'){
+          } else if (title == 'Logout') {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (Route<dynamic> route) => false,);
-          }else if(title=='My Favorite'){
+              (Route<dynamic> route) => false,
+            );
+          } else if (title == 'My Favorite') {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const MyListItemsScreen()));
+              MaterialPageRoute(builder: (context) => const MyListItemsScreen()),
+            );
           }
-          
         },
       ),
-    );
-  }
-}
-// country modal handler
-
-class SelectCountryModal extends StatefulWidget {
-  final String selectedCountry;
-  final ValueChanged<String> onCountrySelected;
-
-  const SelectCountryModal({
-    super.key,
-    required this.selectedCountry,
-    required this.onCountrySelected,
-  });
-
-  @override
-  _SelectCountryModalState createState() => _SelectCountryModalState();
-}
-
-class _SelectCountryModalState extends State<SelectCountryModal> {
-  late String _selectedCountry;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedCountry = widget.selectedCountry;
-  }
-
-  void _selectCountry(String country) {
-    setState(() {
-      _selectedCountry = country;
-    });
-    widget.onCountrySelected(country);
-    Navigator.of(context).pop();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      height: 300,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Select Country',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          buildCountryOption('Saudi Arabia', '🇸🇦'),
-          buildCountryOption('United Arab Emirates', '🇦🇪'),
-          buildCountryOption('Egypt', '🇪🇬'),
-        ],
-      ),
-    );
-  }
-
-  Widget buildCountryOption(String country, String flagPath) {
-    return ListTile(
-      leading: Text(flagPath),
-      title: Text(country),
-      trailing: _selectedCountry == country
-          ? const Icon(Icons.check_circle, color: Colors.green)
-          : const Icon(Icons.radio_button_unchecked),
-      onTap: () => _selectCountry(country),
     );
   }
 }

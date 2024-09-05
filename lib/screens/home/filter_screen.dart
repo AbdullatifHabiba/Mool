@@ -8,6 +8,8 @@ class FilterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = ref.watch(productListProvider).length;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter'),
@@ -27,20 +29,22 @@ class FilterScreen extends ConsumerWidget {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: ListView(
-           
-              children: [
-                buildFilterOption(context, 'category', ref),
-                buildFilterOption(context, 'brand', ref),
-                buildFilterOption(context, 'priceRange', ref),
-                buildFilterOption(context, 'rating', ref),
-                buildFilterOption(context, 'size', ref),
-                buildFilterOption(context, 'color', ref),
-              ],
-            ),
+          ListView(
+            shrinkWrap: true,
+
+            children: [
+              buildFilterOption(context, 'category', ref),
+              buildFilterOption(context, 'brand', ref),
+              buildFilterOption(context, 'priceRange', ref),
+              buildFilterOption(context, 'rating', ref),
+              buildFilterOption(context, 'size', ref),
+              buildFilterOption(context, 'color', ref),
+            ],
           ),
+          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -51,8 +55,17 @@ class FilterScreen extends ConsumerWidget {
                     // Reset all filters logic here
                     ref.read(filterProvider.notifier).resetFilters();
                     ref.read(productListProvider.notifier).filterProducts();
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   },
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0), // Adjust the shape to match the image
+                    ),
+                    side: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Adjust padding for size
+                  ),
                   child: const Text('Reset'),
                 ),
                 ElevatedButton(
@@ -69,7 +82,13 @@ class FilterScreen extends ConsumerWidget {
                     );
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Apply'),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0), // Adjust the shape to match the image
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Adjust padding for size
+                  ),
+                  child: Text('$size items      Apply'),
                 ),
               ],
             ),
@@ -82,8 +101,17 @@ class FilterScreen extends ConsumerWidget {
   Widget buildFilterOption(BuildContext context, String filterType, WidgetRef ref) {
     final value = ref.watch(filterProvider)[filterType];
     return ListTile(
-      title: Text('$filterType ($value)'),
+      // show ( )  only if the filter is selected
+      title: Text('$filterType ${value == null ? '' : '($value)'}'),
       trailing: const Icon(Icons.arrow_forward_ios),
+      tileColor: Colors.white,
+      // bottom border
+      shape: const Border(
+        bottom: BorderSide(
+          color: Colors.grey,
+          width: 0.5,
+        ),
+      ),
       onTap: () {
         // Navigate to the specific filter page
         Navigator.of(context).push(

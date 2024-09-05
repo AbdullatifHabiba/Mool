@@ -12,6 +12,7 @@ class FilterDetailScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select $filterType'),
+        automaticallyImplyLeading: false,
       ),
       body: ListView(
         children: _buildFilterOptions(context, ref),
@@ -20,102 +21,37 @@ class FilterDetailScreen extends ConsumerWidget {
   }
 
   List<Widget> _buildFilterOptions(BuildContext context, WidgetRef ref) {
-    // Customize this method to return specific filter options based on the filterType
     switch (filterType) {
       case 'category':
-        return _buildCategoryOptions(context, ref);
+        return _buildOptions(context, ref, 'category', ['All', 'Tops', 'Dresses', 'Bottoms', 'T-Shirts']);
       case 'brand':
-        return _buildBrandOptions(context, ref);
+        return _buildOptions(context, ref, 'brand', ['Brand A', 'Brand B']);
       case 'priceRange':
-        return _buildPriceOptions(context, ref);
+        return _buildOptions(context, ref, 'priceRange', ['0 - 50', '50 - 100', '100 - 500', '500 - 1000', '1000+']);
       case 'rating':
-        return _buildRatingOptions(context, ref);
+        return _buildOptions(context, ref, 'rating', ['4.0', '3.0'], suffix: '+ Stars');
       case 'size':
-        return _buildSizeOptions(context, ref);
+        return _buildOptions(context, ref, 'size', ['Small', 'Medium', 'Large']);
       case 'color':
-        return _buildColorOptions(context, ref);
+        return _buildOptions(context, ref, 'color', ['Red', 'Blue']);
       default:
         return [];
     }
   }
 
-  List<Widget> _buildCategoryOptions(BuildContext context, WidgetRef ref) {
-    final categories = ['All', 'Tops', 'Dresses', 'Bottoms', 'T-Shirts'];
-    return categories.map((category) {
+  List<Widget> _buildOptions(BuildContext context, WidgetRef ref, String filterKey, List<String> options, {String suffix = ''}) {
+    return options.map((option) {
       return ListTile(
-        title: Text(category),
+        title: Text('$option$suffix'),
+        tileColor: Colors.white,
+        shape: const Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
+          ),
+        ),
         onTap: () {
-          ref.read(filterProvider.notifier).setFilter('category', category);
-          _applyFilters(ref);
-          Navigator.of(context).pop();
-        },
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildBrandOptions(BuildContext context, WidgetRef ref) {
-    final brands = ['Brand A', 'Brand B'];
-    return brands.map((brand) {
-      return ListTile(
-        title: Text(brand),
-        onTap: () {
-          ref.read(filterProvider.notifier).setFilter('brand', brand);
-          _applyFilters(ref);
-          Navigator.of(context).pop();
-        },
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildPriceOptions(BuildContext context, WidgetRef ref) {
-    final priceRanges = ['0 - 50', '50 - 100', '100 - 500', '500 - 1000', '1000+'];
-    return priceRanges.map((priceRange) {
-      return ListTile(
-        title: Text(priceRange),
-        onTap: () {
-          ref.read(filterProvider.notifier).setFilter('priceRange', priceRange);
-          _applyFilters(ref);
-          Navigator.of(context).pop();
-        },
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildRatingOptions(BuildContext context, WidgetRef ref) {
-    final ratings = ['4.0', '3.0'];
-    return ratings.map((rating) {
-      return ListTile(
-        title: Text('$rating+ Stars'),
-        onTap: () {
-          ref.read(filterProvider.notifier).setFilter('rating', rating);
-          _applyFilters(ref);
-          Navigator.of(context).pop();
-        },
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildSizeOptions(BuildContext context, WidgetRef ref) {
-    final sizes = ['Small', 'Medium', 'Large'];
-    return sizes.map((size) {
-      return ListTile(
-        title: Text(size),
-        onTap: () {
-          ref.read(filterProvider.notifier).setFilter('size', size);
-          _applyFilters(ref);
-          Navigator.of(context).pop();
-        },
-      );
-    }).toList();
-  }
-
-  List<Widget> _buildColorOptions(BuildContext context, WidgetRef ref) {
-    final colors = ['Red', 'Blue'];
-    return colors.map((color) {
-      return ListTile(
-        title: Text(color),
-        onTap: () {
-          ref.read(filterProvider.notifier).setFilter('color', color);
+          ref.read(filterProvider.notifier).setFilter(filterKey, option);
           _applyFilters(ref);
           Navigator.of(context).pop();
         },

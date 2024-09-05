@@ -3,7 +3,7 @@ import 'package:mool/widgets/custom_radio_button.dart';
 
 class CountrySelectionSheet extends StatefulWidget {
   final String? selectedCountry;
-  final ValueChanged<String?> onCountrySelected;
+  final ValueChanged<Map<String,String>?> onCountrySelected;
 
   const CountrySelectionSheet({
     super.key,
@@ -12,6 +12,7 @@ class CountrySelectionSheet extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CountrySelectionSheetState createState() => _CountrySelectionSheetState();
 }
 
@@ -24,9 +25,9 @@ class _CountrySelectionSheetState extends State<CountrySelectionSheet> {
     _selectedCountry = widget.selectedCountry;
   }
 
-  void _selectCountry(String? country) {
+  void _selectCountry(Map<String,String>? country) {
     setState(() {
-      _selectedCountry = country;
+      _selectedCountry = country!['name'];
     });
     widget.onCountrySelected(country);
   }

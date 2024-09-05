@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
 class CustomRadioButton extends StatelessWidget {
   final String title;
   final String value;
   final String? groupValue;
-  final ValueChanged<String?> onChanged;
+  final ValueChanged<Map<String, String>?> onChanged;
 
-  const CustomRadioButton({super.key, 
+  const CustomRadioButton({
+    super.key,
     required this.title,
     required this.value,
     required this.groupValue,
@@ -16,7 +18,12 @@ class CustomRadioButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onChanged(value);
+        // Extract flag and name from the title
+        final flag = title.split(' ')[0];
+        final name = title.split(' ').sublist(1).join(' ');
+
+        // Call the onChanged callback with the correct map structure
+        onChanged({'flag': flag, 'name': name});
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -24,27 +31,11 @@ class CustomRadioButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title),
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: groupValue == value
-                    ? Colors.black
-                    : Colors.transparent,
-                border: Border.all(
-                  color: groupValue == value ? Colors.black : Colors.grey,
-                  width: 2.0,
-                ),
-              ),
-              child: groupValue == value
-                  ? const Icon(
-                      Icons.check,
-                      size: 20.0,
-                      color: Colors.white,
-                    )
-                  : const SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                    ),
+            Icon(
+              groupValue == value
+                  ? Icons.check_circle
+                  : Icons.radio_button_unchecked,
+              color: groupValue == value ? Colors.green : Colors.grey,
             ),
           ],
         ),

@@ -15,7 +15,7 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
-  String? selectedCountry;
+  Map<String, String>? selectedCountry;
 
   void _showCountrySelectionSheet() {
     showModalBottomSheet(
@@ -26,7 +26,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       ),
       builder: (context) {
         return CountrySelectionSheet(
-          selectedCountry: selectedCountry,
+          selectedCountry: selectedCountry?['name'],
           onCountrySelected: (country) {
             setState(() {
               selectedCountry = country;
@@ -116,8 +116,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           child: TextFormField(
                             decoration: InputDecoration(
                               labelText: Titles.country,
-                              hintText:
-                                  selectedCountry ?? Titles.countrySelection,
+                              hintText: selectedCountry?['name'] ?? Titles.countrySelection,
                               fillColor: Colors.white,
                               filled: true,
                               border: OutlineInputBorder(
@@ -138,6 +137,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                            ),
+                            controller: TextEditingController(
+                              text: selectedCountry?['name'],
                             ),
                           ),
                         ),
