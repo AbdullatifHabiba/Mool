@@ -11,6 +11,7 @@ class FilterScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filter'),
+        automaticallyImplyLeading: false,
         actions: [
           TextButton(
             onPressed: () {
@@ -29,13 +30,14 @@ class FilterScreen extends ConsumerWidget {
         children: [
           Expanded(
             child: ListView(
+           
               children: [
-                buildFilterOption(context, 'Category'),
-                buildFilterOption(context, 'Brand'),
-                buildFilterOption(context, 'Price'),
-                buildFilterOption(context, 'Product Rating'),
-                buildFilterOption(context, 'Size'),
-                buildFilterOption(context, 'Color'),
+                buildFilterOption(context, 'category', ref),
+                buildFilterOption(context, 'brand', ref),
+                buildFilterOption(context, 'priceRange', ref),
+                buildFilterOption(context, 'rating', ref),
+                buildFilterOption(context, 'size', ref),
+                buildFilterOption(context, 'color', ref),
               ],
             ),
           ),
@@ -48,6 +50,7 @@ class FilterScreen extends ConsumerWidget {
                   onPressed: () {
                     // Reset all filters logic here
                     ref.read(filterProvider.notifier).resetFilters();
+                    ref.read(productListProvider.notifier).filterProducts();
                     Navigator.of(context).pop();
                   },
                   child: const Text('Reset'),
@@ -58,8 +61,11 @@ class FilterScreen extends ConsumerWidget {
                     final filterNotifier = ref.read(filterProvider.notifier);
                     ref.read(productListProvider.notifier).filterProducts(
                       category: filterNotifier.getFilter('category'),
-                      isBest: filterNotifier.getFilter('isBest') == 'true',
-                      isNew: filterNotifier.getFilter('isNew') == 'true',
+                      brand: filterNotifier.getFilter('brand'),
+                      priceRange: filterNotifier.getFilter('priceRange'),
+                      rating: filterNotifier.getFilter('rating'),
+                      size: filterNotifier.getFilter('size'),
+                      color: filterNotifier.getFilter('color'),
                     );
                     Navigator.of(context).pop();
                   },
@@ -73,9 +79,10 @@ class FilterScreen extends ConsumerWidget {
     );
   }
 
-  Widget buildFilterOption(BuildContext context, String filterType) {
+  Widget buildFilterOption(BuildContext context, String filterType, WidgetRef ref) {
+    final value = ref.watch(filterProvider)[filterType];
     return ListTile(
-      title: Text(filterType),
+      title: Text('$filterType ($value)'),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         // Navigate to the specific filter page

@@ -1,91 +1,137 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/states/items_list.dart';
 
-class FilterDetailScreen extends StatelessWidget {
+class FilterDetailScreen extends ConsumerWidget {
   final String filterType;
 
   const FilterDetailScreen({super.key, required this.filterType});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Select $filterType'),
       ),
       body: ListView(
-        children: _buildFilterOptions(),
+        children: _buildFilterOptions(context, ref),
       ),
     );
   }
 
-  List<Widget> _buildFilterOptions() {
+  List<Widget> _buildFilterOptions(BuildContext context, WidgetRef ref) {
     // Customize this method to return specific filter options based on the filterType
     switch (filterType) {
-      case 'Category':
-        return _buildCategoryOptions();
-      case 'Brand':
-        return _buildBrandOptions();
-      case 'Price':
-        return _buildPriceOptions();
-      case 'Product Rating':
-        return _buildRatingOptions();
-      case 'Size':
-        return _buildSizeOptions();
-      case 'Color':
-        return _buildColorOptions();
+      case 'category':
+        return _buildCategoryOptions(context, ref);
+      case 'brand':
+        return _buildBrandOptions(context, ref);
+      case 'priceRange':
+        return _buildPriceOptions(context, ref);
+      case 'rating':
+        return _buildRatingOptions(context, ref);
+      case 'size':
+        return _buildSizeOptions(context, ref);
+      case 'color':
+        return _buildColorOptions(context, ref);
       default:
         return [];
     }
   }
 
-  List<Widget> _buildCategoryOptions() {
-    // Example of category options
-    return [
-      ListTile(title: const Text('All'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('Tops'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('Dresses'), onTap: () {/* Handle selection */}),
-      // Add more categories as needed
-    ];
+  List<Widget> _buildCategoryOptions(BuildContext context, WidgetRef ref) {
+    final categories = ['All', 'Tops', 'Dresses', 'Bottoms', 'T-Shirts'];
+    return categories.map((category) {
+      return ListTile(
+        title: Text(category),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('category', category);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
   }
 
-  // Define other filter options similarly
-
-  List<Widget> _buildBrandOptions() {
-    return [
-      ListTile(title: const Text('Brand A'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('Brand B'), onTap: () {/* Handle selection */}),
-      // Add more brands as needed
-    ];
+  List<Widget> _buildBrandOptions(BuildContext context, WidgetRef ref) {
+    final brands = ['Brand A', 'Brand B'];
+    return brands.map((brand) {
+      return ListTile(
+        title: Text(brand),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('brand', brand);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
   }
 
-  List<Widget> _buildPriceOptions() {
-    return [
-      ListTile(title: const Text('\$0 - \$50'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('\$50 - \$100'), onTap: () {/* Handle selection */}),
-      // Add more price ranges as needed
-    ];
+  List<Widget> _buildPriceOptions(BuildContext context, WidgetRef ref) {
+    final priceRanges = ['0 - 50', '50 - 100', '100 - 500', '500 - 1000', '1000+'];
+    return priceRanges.map((priceRange) {
+      return ListTile(
+        title: Text(priceRange),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('priceRange', priceRange);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
   }
 
-  List<Widget> _buildRatingOptions() {
-    return [
-      ListTile(title: const Text('4+ Stars'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('3+ Stars'), onTap: () {/* Handle selection */}),
-      // Add more rating ranges as needed
-    ];
+  List<Widget> _buildRatingOptions(BuildContext context, WidgetRef ref) {
+    final ratings = ['4.0', '3.0'];
+    return ratings.map((rating) {
+      return ListTile(
+        title: Text('$rating+ Stars'),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('rating', rating);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
   }
 
-  List<Widget> _buildSizeOptions() {
-    return [
-      ListTile(title: const Text('Small'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('Medium'), onTap: () {/* Handle selection */}),
-      // Add more sizes as needed
-    ];
+  List<Widget> _buildSizeOptions(BuildContext context, WidgetRef ref) {
+    final sizes = ['Small', 'Medium', 'Large'];
+    return sizes.map((size) {
+      return ListTile(
+        title: Text(size),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('size', size);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
   }
 
-  List<Widget> _buildColorOptions() {
-    return [
-      ListTile(title: const Text('Red'), onTap: () {/* Handle selection */}),
-      ListTile(title: const Text('Blue'), onTap: () {/* Handle selection */}),
-      // Add more colors as needed
-    ];
+  List<Widget> _buildColorOptions(BuildContext context, WidgetRef ref) {
+    final colors = ['Red', 'Blue'];
+    return colors.map((color) {
+      return ListTile(
+        title: Text(color),
+        onTap: () {
+          ref.read(filterProvider.notifier).setFilter('color', color);
+          _applyFilters(ref);
+          Navigator.of(context).pop();
+        },
+      );
+    }).toList();
+  }
+
+  void _applyFilters(WidgetRef ref) {
+    final filterNotifier = ref.read(filterProvider.notifier);
+    ref.read(productListProvider.notifier).filterProducts(
+      category: filterNotifier.getFilter('category'),
+      brand: filterNotifier.getFilter('brand'),
+      priceRange: filterNotifier.getFilter('priceRange'),
+      rating: filterNotifier.getFilter('rating'),
+      size: filterNotifier.getFilter('size'),
+      color: filterNotifier.getFilter('color'),
+    );
   }
 }

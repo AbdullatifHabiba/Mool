@@ -134,9 +134,15 @@ class ListItemsScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref.read(filterProvider.notifier).setFilter('category', title);
+        final filterNotifier = ref.read(filterProvider.notifier);
         ref.read(productListProvider.notifier).filterProducts(
-              category: title,
-            );
+          category: filterNotifier.getFilter('category'),
+          brand: filterNotifier.getFilter('brand'),
+          priceRange: filterNotifier.getFilter('priceRange'),
+          rating: filterNotifier.getFilter('rating'),
+          size: filterNotifier.getFilter('size'),
+          color: filterNotifier.getFilter('color'),
+        );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
