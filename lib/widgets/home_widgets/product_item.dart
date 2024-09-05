@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/interfaces/product.dart';
 import 'package:mool/states/items_list.dart';
 
 class ProductItem extends ConsumerWidget {

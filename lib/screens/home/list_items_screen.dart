@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/interfaces/product.dart';
 import 'package:mool/screens/home/filter_screen.dart';
 import 'package:mool/screens/home/search_screen.dart';
 import 'package:mool/screens/home/sort_screen.dart';

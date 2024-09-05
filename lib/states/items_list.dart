@@ -1,32 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mool/constants/images.dart';
-
-// Models
-class Product {
-  final String title;
-  final String imagePath;
-  final double price;
-  final bool isBest;
-  final String category;
-  final double rating;
-  final bool isNew;
-  final String brand;
-  final String size;
-  final String color;
-
-  Product({
-    required this.title,
-    required this.imagePath,
-    required this.price,
-    required this.isBest,
-    required this.category,
-    required this.rating,
-    required this.isNew,
-    required this.brand,
-    required this.size,
-    required this.color,
-  });
-}
+import 'package:mool/data/items.dart';
+import 'package:mool/interfaces/product.dart';
 
 // State for managing the list of products
 class ProductListNotifier extends StateNotifier<List<Product>> {
@@ -140,97 +114,8 @@ final sortProvider = StateNotifierProvider<SortNotifier, String>(
 // Sample product list
 final productListProvider = StateNotifierProvider<ProductListNotifier, List<Product>>(
     (ref) {
-  final products = [
-    Product(
-        title: 'Elegant Dress',
-        imagePath: Images.accessories,
-        price: 2500,
-        isBest: true,
-        category: 'Dresses',
-        rating: 4.5,
-        isNew: false,
-        brand: 'Brand A',
-        size: 'M',
-        color: 'Red'),
-    Product(
-        title: 'Casual Shirt',
-        imagePath: Images.accessories,
-        price: 2560,
-        isBest: true,
-        category: 'Tops',
-        rating: 4.0,
-        isNew: false,
-        brand: 'Brand B',
-        size: 'L',
-        color: 'Blue'),
-    Product(
-        title: 'Jeans',
-        imagePath: Images.accessories,
-        price: 6500,
-        isBest: true,
-        category: 'Bottoms',
-        rating: 4.8,
-        isNew: false,
-        brand: 'Brand A',
-        size: 'S',
-        color: 'Red'),
-    Product(
-        title: 'T-Shirt',
-        imagePath: Images.accessories,
-        price: 8500,
-        isBest: true,
-        category: 'T-Shirts',
-        rating: 3.9,
-        isNew: false,
-        brand: 'Brand B',
-        size: 'M',
-        color: 'Blue'),
-    Product(
-        title: 'Skirt',
-        imagePath: Images.accessories,
-        price: 250,
-        isBest: false,
-        category: 'Bottoms',
-        rating: 4.2,
-        isNew: true,
-        brand: 'Brand A',
-        size: 'L',
-        color: 'Red'),
-    Product(
-        title: 'Blouse',
-        imagePath: Images.accessories,
-        price: 2100,
-        isBest: false,
-        category: 'Tops',
-        rating: 4.1,
-        isNew: true,
-        brand: 'Brand B',
-        size: 'S',
-        color: 'Blue'),
-    Product(
-        title: 'Jacket',
-        imagePath: Images.accessories,
-        price: 250,
-        isBest: false,
-        category: 'Tops',
-        rating: 3.5,
-        isNew: true,
-        brand: 'Brand A',
-        size: 'M',
-        color: 'Red'),
-    Product(
-        title: 'Shorts',
-        imagePath: Images.accessories,
-        price: 200,
-        isBest: false,
-        category: 'Bottoms',
-        rating: 4.0,
-        isNew: true,
-        brand: 'Brand B',
-        size: 'L',
-        color: 'Blue'),
-  ];
-  return ProductListNotifier(products);
+  final products = DummyData.getProducts();
+   return ProductListNotifier(products);
 });
 
 // State provider to manage the selected tab in the home screen
@@ -241,22 +126,25 @@ final isBestSellersProvider = StateProvider<bool>((ref) => false);
 
 // Favorite products provider
 class FavoriteProductsNotifier extends StateNotifier<List<Product>> {
+  List<Product> _allFavorites = [];
+
   FavoriteProductsNotifier() : super([]);
 
   void toggleFavorite(Product product) {
-    if (state.contains(product)) {
-      state = state.where((p) => p != product).toList();
+    if (_allFavorites.contains(product)) {
+      _allFavorites = _allFavorites.where((p) => p != product).toList();
     } else {
-      state = [...state, product];
+      _allFavorites = [..._allFavorites, product];
     }
+    state = _allFavorites;
   }
 
   bool isFavorite(Product product) {
-    return state.contains(product);
+    return _allFavorites.contains(product);
   }
 
   void filterFavoriteProducts({required String category}) {
-    state = state.where((product) {
+    state = _allFavorites.where((product) {
       final matchesCategory = category == 'All' || product.category == category;
       return matchesCategory;
     }).toList();

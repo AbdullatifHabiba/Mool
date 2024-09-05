@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/interfaces/product.dart';
 import 'package:mool/screens/home/search_screen.dart';
 import 'package:mool/states/items_list.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
@@ -37,7 +38,7 @@ class MyListItemsScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   buildCategoryFilter(
-                      context, ref, 'All', true), 
+                      context, ref, 'All', filters['category'] == 'All'), 
                         buildCategoryFilter(
                       context, ref, 'Tops', filters['category'] == 'Tops'),
                   buildCategoryFilter(context, ref, 'Dresses',

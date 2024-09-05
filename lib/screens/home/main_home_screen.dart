@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mool/constants/images.dart';
+import 'package:mool/data/items.dart';
 import 'package:mool/screens/home/list_items_screen.dart';
 import 'package:mool/states/items_list.dart';
 import 'package:mool/widgets/home_widgets/cursoal_slider.dart';
@@ -108,7 +109,7 @@ class MainHomeScreen extends ConsumerWidget {
 
   Widget buildProductListView(WidgetRef ref, bool isBest) {
     // get best prouducts or new arrivals based on the flag
-    final products = ref.watch(productListProvider).where((product) {
+    final products = DummyData.getProducts().where((product) {
       if (isBest) {
         return product.isBest;
       } else {
