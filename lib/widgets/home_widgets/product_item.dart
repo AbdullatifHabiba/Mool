@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mool/interfaces/product.dart';
-import 'package:mool/states/items_list.dart';
+import 'package:mool/screens/product/product_screen.dart';
+import 'package:mool/widgets/custom_fav_button.dart';
 
 class ProductItem extends ConsumerWidget {
   final Product product;
@@ -13,8 +14,6 @@ class ProductItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteProducts = ref.watch(favoriteProductsProvider);
-    final isFavorite = favoriteProducts.contains(product);
 
     return Container(
       width: 190,
@@ -68,31 +67,12 @@ class ProductItem extends ConsumerWidget {
                     ),
                   ),
                 ),
-              Positioned(
+              CustomFavButton(
+                product: product,
                 top: 10,
                 right: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(favoriteProductsProvider.notifier).toggleFavorite(product);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          color: isFavorite ? Colors.red : Colors.transparent,
-                          width: 2),
-                    ),
-                    child: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      size: 20,
-                      color: isFavorite ? Colors.red : Colors.black,
-                    ),
-                  ),
-                ),
               ),
-            ],
+               ],
           ),
           Stack(children: [
             // Details Section
@@ -140,18 +120,30 @@ class ProductItem extends ConsumerWidget {
             Positioned(
               bottom: 0,
               right: 0,
-              child: Container(
-                width: 40,
-                height: 40,
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF292D32),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
+              child: GestureDetector(
+                onTap: () {
+                  //ref.read(cartItemsProvider.notifier).addItem(product);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailScreen(
+                        product: product,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF292D32),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
                   ),
+                  child: const Icon(Icons.add, color: Colors.white, size: 16),
                 ),
-                child: const Icon(Icons.add, color: Colors.white, size: 16),
               ),
             ),
           ])
