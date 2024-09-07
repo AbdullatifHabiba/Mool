@@ -13,16 +13,16 @@ class MainHomeScreen extends ConsumerWidget {
   const MainHomeScreen({
     super.key,
     required this.buildGenderTab,
+    required this.searchController,
+    required this.searchQuery,
   });
 
   final Function(String, int) buildGenderTab;
+  final TextEditingController searchController;
+  final String searchQuery;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Use the providers
-    // final selectedGenderTab = ref.watch(selectedGenderTabProvider);
-    // final isBestSellers = ref.watch(isBestSellersProvider);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -108,14 +108,13 @@ class MainHomeScreen extends ConsumerWidget {
   }
 
   Widget buildProductListView(WidgetRef ref, bool isBest) {
-    // get best prouducts or new arrivals based on the flag
+    // get best products or new arrivals based on the flag
     final products = DummyData.getProducts().where((product) {
-      if (isBest) {
-        return product.isBest;
-      } else {
-        return product.isNew;
-      }
+      final matchesBestOrNew = isBest ? product.isBest : product.isNew;
+      final matchesSearchQuery = product.title.toLowerCase().contains(searchQuery.toLowerCase());
+      return matchesBestOrNew && matchesSearchQuery;
     }).toList();
+
     return SizedBox(
       height: 300,
       child: ListView.builder(

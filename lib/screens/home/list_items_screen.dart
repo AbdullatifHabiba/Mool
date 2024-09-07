@@ -2,45 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mool/interfaces/product.dart';
 import 'package:mool/screens/home/filter_screen.dart';
-import 'package:mool/screens/home/search_screen.dart';
 import 'package:mool/screens/home/sort_screen.dart';
 import 'package:mool/states/items_list.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 import 'package:mool/widgets/home_widgets/product_item.dart';
+import 'package:mool/widgets/home_widgets/search_custom_input.dart';
 
-class ListItemsScreen extends ConsumerWidget {
+class ListItemsScreen extends ConsumerStatefulWidget {
   final bool showBestSellers;
 
   const ListItemsScreen({super.key, required this.showBestSellers});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ListItemsScreen> createState() => _ListItemsScreenState();
+}
+
+class _ListItemsScreenState extends ConsumerState<ListItemsScreen> {
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    final searchQuery = ref.read(searchQueryProvider);
+    _searchController = TextEditingController(text: searchQuery);
+  }
+
+  void _onSearchChanged(String query) {
+    ref.read(searchQueryProvider.notifier).state = query;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final products = ref.watch(productListProvider);
     final filters = ref.watch(filterProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
 
-    // Filter products based on showBestSellers flag
+    // Filter products based on showBestSellers flag and search query
     final filteredProducts = products.where((product) {
-      if (showBestSellers) {
-        return product.isBest;
+      final matchesSearchQuery = product.title.toLowerCase().contains(searchQuery.toLowerCase());
+      if (widget.showBestSellers) {
+        return product.isBest && matchesSearchQuery;
       } else {
-        return product.isNew;
+        return product.isNew && matchesSearchQuery;
       }
     }).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(showBestSellers ? 'Best Sellers' : 'New Arrivals'),
+        title: Text(widget.showBestSellers ? 'Best Sellers' : 'New Arrivals'),
         leading: CustomBackArrow(
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const SearchScreen()));
+          ExpandableSearchBar(
+            controller: _searchController,
+            onChanged: _onSearchChanged,
+            onClear: () {
+              _searchController.clear();
+              _onSearchChanged('');
             },
           ),
         ],

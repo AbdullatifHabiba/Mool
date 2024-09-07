@@ -154,3 +154,5 @@ class FavoriteProductsNotifier extends StateNotifier<List<Product>> {
 final favoriteProductsProvider =
     StateNotifierProvider<FavoriteProductsNotifier, List<Product>>(
         (ref) => FavoriteProductsNotifier());
+        
+final searchQueryProvider = StateProvider<String>((ref) => '');

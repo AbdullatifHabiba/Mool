@@ -7,7 +7,7 @@ import 'package:mool/screens/home/main_home_screen.dart';
 import 'package:mool/screens/notification_screen.dart';
 import 'package:mool/screens/profile/profile_screen.dart';
 import 'package:mool/widgets/home_widgets/home_bottom_widget.dart';
-import 'package:mool/widgets/home_widgets/search_cutom_input.dart';
+import 'package:mool/widgets/home_widgets/search_custom_input.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   int _selectedTabIndex = 1; // To keep track of selected "WOMEN" or "MEN"
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   late final List<Widget> _children;
   late Widget _currentScreen;
@@ -31,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _children = [
       MainHomeScreen(
         buildGenderTab: _buildGenderTab,
+        searchController: _searchController,
+        searchQuery: _searchQuery,
       ),
       const CategoriesScreen(),
       const DiscoverScreen(),
@@ -56,57 +60,77 @@ class _HomeScreenState extends State<HomeScreen> {
           ? const Center(child: Text('WOMEN Category Screen'))
           : MainHomeScreen(
               buildGenderTab: _buildGenderTab,
+              searchController: _searchController,
+              searchQuery: _searchQuery,
             );
+    });
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query;
+      _currentScreen = MainHomeScreen(
+        buildGenderTab: _buildGenderTab,
+        searchController: _searchController,
+        searchQuery: _searchQuery,
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _currentIndex==0?
-         PreferredSize(
-        preferredSize: const Size.fromHeight(100.0),
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: const Color(0xFF292D32),
-              automaticallyImplyLeading: false,
-              title: Image.asset(Images.logo, height: 50),
-              actions: [
-                const ExpandableSearchBar(),
-                IconButton(
-                  icon: const Icon(Icons.notifications),
-                  onPressed: () {
-                    // Handle notification tap
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const NotificationsScreen()));
-                  },
-                ),
-              ],
-            ),
-            Container(
-              color: const Color(0xFF292D32),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      appBar: _currentIndex == 0
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(100.0),
+              child: Column(
                 children: [
-                  _buildGenderTab('WOMEN', 0),
-                  _buildGenderTab('MEN', 1),
+                  AppBar(
+                    backgroundColor: const Color(0xFF292D32),
+                    automaticallyImplyLeading: false,
+                    title: Image.asset(Images.logo, height: 50),
+                    actions: [
+                      ExpandableSearchBar(
+                        controller: _searchController,
+                        onChanged: _onSearchChanged,
+                        onClear: () {
+                          _searchController.clear();
+                          _onSearchChanged('');
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.notifications),
+                        onPressed: () {
+                          // Handle notification tap
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationsScreen()));
+                        },
+                      ),
+                    ],
+                  ),
+                  Container(
+                    color: const Color(0xFF292D32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildGenderTab('WOMEN', 0),
+                        _buildGenderTab('MEN', 1),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ):null,
-    
-            body: Stack(
+            )
+          : null,
+      body: Stack(
         children: [
           _currentScreen, // Your main screen content
           if (_currentIndex != 2)
-         CustomBottomNavigationBar(
-                currentIndex: _currentIndex,
-                onTap: _onTabTapped,
-              ),
-            
+            CustomBottomNavigationBar(
+              currentIndex: _currentIndex,
+              onTap: _onTabTapped,
+            ),
         ],
       ),
     );

@@ -20,7 +20,7 @@ class DummyData {
         size: 'M',
         color: 'Red'),
     Product(
-        title: 'Casual Shirt',
+        title: 'Polo',
         imagePath: Images.accessories,
         price: 2560,
         isBest: true,
