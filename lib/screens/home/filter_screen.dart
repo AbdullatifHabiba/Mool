@@ -70,7 +70,6 @@ class FilterScreen extends ConsumerWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Apply filters logic here
                     final filterNotifier = ref.read(filterProvider.notifier);
                     ref.read(productListProvider.notifier).filterProducts(
                       category: filterNotifier.getFilter('category'),

@@ -8,7 +8,7 @@ class Titles {
   static const String logout = 'Logout';
   static const String login = 'Login';
   static const String signUp = 'Sign Up';
-  static const String continueAsGuest = 'Continue as Guest';
+  static const String continueAsGuest = 'Continue as guest';
   static const String forgotPassword = 'Forgot\nPassword';
   static const String createAccount = 'Create Account';
   static const String startShopping = 'Start Shopping Now';
@@ -21,7 +21,7 @@ class Titles {
   static const String getYourDreamItems =
       'Get your dream items easily with Mool and get other interesting offers';
   static const String continuingAgree = 'By continuing, you agree to our';
-  static const String termsOfService = 'Terms of Service';
+  static const String termsOfService = 'Terms and Conditions';
   static const String and = 'and';
   static const String privacyPolicy = 'Privacy Policy';
   static const String alreadyHaveAccount = 'Already Have account ?';

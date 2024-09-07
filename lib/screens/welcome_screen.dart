@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mool/constants/images.dart';
 import 'package:mool/constants/titles.dart';
 import 'package:mool/screens/auth/create_account_screen.dart';
@@ -11,206 +10,175 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen size
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.only(top: 50.0),
-        color: Colors.grey[900],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: size.height * 0.5, // 50% of screen height
+        color: Colors.black,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: size.height * 0.08),
+            const Text(
+              'MOOL',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: size.height * 0.05),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  Images.welcome,
+                  width: size.width * 0.8,
+                  height: size.height * 0.3,
+                ),
+                //   Positioned(
+                //     right: size.width * 0.15,
+                //     child: ClipOval(
+                //       child: Image.asset(
+                //         Images.person,
+                //         width: size.width * 0.2,
+                //         height: size.width * 0.35,
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //   ),
+                //   Positioned(
+                //     left: size.width * 0.15,
+                //     child: ClipOval(
+                //       child: Image.asset(
+                //         Images.person,
+                //         width: size.width * 0.2,
+                //         height: size.width * 0.35,
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //   ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.03),
+            const Text(
+              Titles.findTheBestCollection,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(top: size.height * 0.05),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.05,
+                    vertical: size.height * 0.03),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      Images.logo,
-                      height: size.height * 0.05, 
-                      width: size.width * 0.25,
+                    const Text(
+                      Titles.getYourDreamItems,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      ),
                     ),
-                    Center(
-                      child: SizedBox(
-                        width: size.width , 
-                        height: size.height * 0.35, //  height
-                        child: Stack(
+                    SizedBox(height: size.height * 0.03),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomElevatedButton(
+                            text: 'Sign Up',
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateAccountScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: 
+                          CustomElevatedButton(
+                            text: 'Sign In',
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignInScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    TextButton(
+                      onPressed: () {
+                        // Handle Continue as Guest
+                      },
+                      child: RichText(
+                        text: const TextSpan(
                           children: [
-                            Positioned(
-                              left: size.width * 0.1, 
-                              child: SvgPicture.asset(
-                                Images.welcome,
-                                fit: BoxFit.cover,
-                                width: size.width ,
-                                height: size.height * 0.3, //  height
-                              ),
+                            TextSpan(
+                              text: 'Continue as ',
+                              style: TextStyle(color: Colors.grey),
                             ),
-                            Positioned(
-                              left: size.width * 0.12, 
-                              top: size.height * 0.01, 
-                              child: Image.asset(
-                                Images.person,
-                                fit: BoxFit.cover,
-                                width: size.width * 0.44, 
-                                height: size.height * 0.28, //  height
-                              ),
-                            ),
-                            Positioned(
-                              top: size.height * 0.01, 
-                              right: size.width * 0.09, 
-                              child: Image.asset(
-                                Images.person,
-                                fit: BoxFit.cover,
-                                width: size.width * 0.44, 
-                                height: size.height * 0.28, //  height
-                              ),
+                            TextSpan(
+                              text: 'guest',
+                              style: TextStyle(color: Colors.black),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: size.width * 0.05), 
-                      child: const Text(
-                        Titles.findTheBestCollection,
-                        style: TextStyle(
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
+                    const Spacer(),
+                    Center(
+                      child: Column(
+                        children: [
+                          const Text(
+                            Titles.continuingAgree,
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Handle Terms of Service
+                            },
+                            child: const Text(
+                              Titles.termsOfService,
+                              style: TextStyle(
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: size.height * 0.01), // 1% of screen height
-                  padding: EdgeInsets.all(size.width * 0.05), // 5% of screen width for padding
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(30.0),
-                    ),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Text(
-                          Titles.getYourDreamItems,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            height: 1.5,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                        SizedBox(height: size.height * 0.02), // 2% of screen height
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomElevatedButton(
-                              text: Titles.signUp,
-                              backgroundColor: Colors.white,
-                              textColor: Colors.black,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const CreateAccountScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(width: size.width * 0.05), // 5% of screen width
-                            CustomElevatedButton(
-                              text: Titles.signIn,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignInScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.02), // 2% of screen height
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: TextButton(
-                            onPressed: () {
-                              // Handle Continue as Guest
-                            },
-                            child: const Row(
-                              children: [
-                                Text(
-                                  'Continue as ',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.grey,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  'Guest',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01), // 1% of screen height
-                        Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: [
-                              const Text(
-                                Titles.continuingAgree,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.grey,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // Handle Privacy Policy
-                                },
-                                child: const Text(
-                                  Titles.termsOfService,
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

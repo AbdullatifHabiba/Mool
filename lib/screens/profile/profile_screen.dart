@@ -8,6 +8,7 @@ class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAccountScreenState createState() => _MyAccountScreenState();
 }
 
@@ -47,6 +48,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           buildAccountOption(context, 'About Us', Icons.info_outline),
           buildAccountOption(context, 'Contact Us', Icons.contact_mail_outlined),
           buildAccountOption(context, 'Logout', Icons.logout),
+          const SizedBox(height: 80)
         ],
       ),
     );
