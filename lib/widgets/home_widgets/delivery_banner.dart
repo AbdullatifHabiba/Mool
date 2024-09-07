@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mool/constants/titles.dart';
 
 class DeliveryBanner extends StatelessWidget {
   const DeliveryBanner({super.key});
@@ -22,7 +23,7 @@ class DeliveryBanner extends StatelessWidget {
           ),
           SizedBox(width: 8), // Space between the icon and text
           Text(
-            '48 HOURS DELIVERY',
+            Titles.aboutDelivery, // Text content
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,

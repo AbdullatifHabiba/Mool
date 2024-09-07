@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mool/constants/titles.dart';
 import 'package:mool/screens/home/search_screen.dart';
 
 class ExpandableSearchBar extends StatefulWidget {
@@ -47,7 +48,7 @@ class _ExpandableSearchBarState extends State<ExpandableSearchBar> {
                 onChanged: widget.onChanged,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: 'What are you looking for?',
+                  hintText: Titles.hintSearch,
                   prefixIcon: IconButton(
                     icon: const Icon(Icons.search),
                     color: Colors.white,

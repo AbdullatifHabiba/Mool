@@ -107,9 +107,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const CustomTextField(label: 'First Name'),
-                      const CustomTextField(label: 'Last Name'),
-                      const CustomTextField(label: 'Email'),
+                      const CustomTextField(label: Titles.firstName),
+                      const CustomTextField(label: Titles.lastName),
+                      const CustomTextField(label: Titles.email),
                       GestureDetector(
                         onTap: _showCountrySelectionSheet,
                         child: AbsorbPointer(
@@ -149,17 +149,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         children: [
                           Expanded(
                             flex: 2,
-                            child: CustomTextField(label: 'Country Code'),
+                            child: CustomTextField(label: Titles.countryCode),
                           ),
                           SizedBox(width: 8),
                           Expanded(
                             flex: 5,
-                            child: CustomTextField(label: 'Mobile No.'),
+                            child: CustomTextField(label: Titles.mobileNo),
                           ),
                         ],
                       ),
                       const CustomTextField(
-                          label: 'Password', obscureText: true),
+                          label: Titles.password, obscureText: true),
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
@@ -195,7 +195,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('OR'),
+                            child: Text(Titles.or),
                           ),
                           Expanded(child: Divider()),
                         ],

@@ -42,8 +42,7 @@ class SignInScreen extends StatelessWidget {
                 flexibleSpace: const FlexibleSpaceBar(
                   centerTitle: false,
                   titlePadding: EdgeInsets.only(left: 16.0, bottom: 16.0),
-                  title: 
-                  Text(
+                  title: Text(
                     '${Titles.signIn} \n${Titles.welcome}',
                     style: TextStyle(
                       color: Colors.white,
@@ -51,8 +50,7 @@ class SignInScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-
+                ),
               ),
               SliverFillRemaining(
                 hasScrollBody: false,
@@ -83,7 +81,7 @@ class SignInScreen extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.centerRight, // Align to right
                           child: const Text(
-                            'Forget Password?',
+                            Titles.forgotPasswordQuestion,
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Colors.green,
@@ -93,20 +91,20 @@ class SignInScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
                         },
                         child: const Text(
-                          'Sign in',
+                          Titles.signIn,
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Don\'t Have account ?'),
+                          const Text(Titles.signUpQuestion),
                           TextButton(
                             style: TextButton.styleFrom(
                               textStyle: const TextStyle(
@@ -121,7 +119,7 @@ class SignInScreen extends StatelessWidget {
                               ));
                               // Handle Login
                             },
-                            child: const Text('SignUp'),
+                            child: const Text(Titles.signUp),
                           ),
                         ],
                       ),
@@ -130,7 +128,7 @@ class SignInScreen extends StatelessWidget {
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text('OR'),
+                            child: Text(Titles.or),
                           ),
                           Expanded(child: Divider()),
                         ],

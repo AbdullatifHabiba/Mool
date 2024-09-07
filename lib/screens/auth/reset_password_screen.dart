@@ -33,7 +33,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text('Submit', style: TextStyle(color: Colors.white)),
+                      child: const Text(Titles.submit, style: TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),

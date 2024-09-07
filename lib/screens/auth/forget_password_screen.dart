@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mool/constants/titles.dart';
 import 'package:mool/screens/auth/verify_screen.dart';
 import 'package:mool/widgets/custom_text_field.dart';
 import 'package:mool/widgets/custum_app_bar.dart';
@@ -11,7 +12,7 @@ class ForgetPasswordScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const CustomAppBar(title: 'Forget\nPassword'),
+          const CustomAppBar(title: Titles.forgotPassword),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -31,7 +32,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text('Submit'),
+                      child: const Text(Titles.submit),
                     ),
                   ],
                 ),

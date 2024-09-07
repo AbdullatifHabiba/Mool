@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mool/screens/country_selection_screen.dart';
 import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/screens/home/my_list_screen.dart';
+import 'package:mool/screens/welcome_screen.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -79,6 +80,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             showModalBottomSheet(
               context: context,
               builder: (context) => CountrySelectionSheet(
+                seeContinueButton: false,
                 selectedCountry: _selectedCountry['name'],
                 onCountrySelected: (country) {
                   if (country != null) {
@@ -90,7 +92,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             );
           } else if (title == 'Logout') {
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
               (Route<dynamic> route) => false,
             );
           } else if (title == 'My Favorite') {

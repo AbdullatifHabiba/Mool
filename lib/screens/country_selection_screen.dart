@@ -4,11 +4,14 @@ import 'package:mool/widgets/custom_radio_button.dart';
 class CountrySelectionSheet extends StatefulWidget {
   final String? selectedCountry;
   final ValueChanged<Map<String,String>?> onCountrySelected;
+  final bool seeContinueButton;
 
   const CountrySelectionSheet({
     super.key,
     required this.selectedCountry,
     required this.onCountrySelected,
+    this.seeContinueButton = true,
+
   });
 
   @override
@@ -18,11 +21,16 @@ class CountrySelectionSheet extends StatefulWidget {
 
 class _CountrySelectionSheetState extends State<CountrySelectionSheet> {
   late String? _selectedCountry;
+  bool _seeContinueButton = false;
+
+
 
   @override
   void initState() {
     super.initState();
     _selectedCountry = widget.selectedCountry;
+    _seeContinueButton = widget.seeContinueButton;
+
   }
 
   void _selectCountry(Map<String,String>? country) {
@@ -74,12 +82,9 @@ class _CountrySelectionSheetState extends State<CountrySelectionSheet> {
               ],
             ),
           ),
+          // see only if pop up in create account screen
+          if (_seeContinueButton)
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              padding: const EdgeInsets.all(16),
-              minimumSize: const Size(200, 50),
-            ),
             onPressed: () {
               Navigator.pop(context);
             },
