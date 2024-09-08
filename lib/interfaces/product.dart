@@ -9,6 +9,7 @@ class Product {
   final String brand;
   final String size;
   final String color;
+  int quantity;
 
   Product({
     required this.title,
@@ -21,6 +22,6 @@ class Product {
     required this.brand,
     required this.size,
     required this.color,
+    this.quantity = 1, // Default quantity is 1
   });
-  
 }

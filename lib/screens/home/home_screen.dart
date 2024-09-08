@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           _currentScreen, // Your main screen content
-          if (_currentIndex != 2)
+          if (_currentIndex != 2 && _currentIndex != 3)
             CustomBottomNavigationBar(
               currentIndex: _currentIndex,
               onTap: _onTabTapped,

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/data/items.dart';
 import 'package:mool/interfaces/product.dart';
+import 'package:mool/screens/Cart/cart_screen.dart';
+import 'package:mool/states/cart.dart';
 import 'package:mool/widgets/custom_fav_button.dart';
+import 'package:mool/widgets/product_detail_widgets.dart';
 
 class ProductDetailScreen extends ConsumerWidget {
   final Product product;
@@ -20,7 +24,13 @@ class ProductDetailScreen extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.card_travel),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CartScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -58,7 +68,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   // Product Title and Price
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -74,7 +84,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text('ZARA'),
+                  const Text(DummyData.productBrand),
                   const SizedBox(height: 8),
                   const Row(
                     children: [
@@ -84,7 +94,7 @@ class ProductDetailScreen extends ConsumerWidget {
                       Icon(Icons.star, color: Colors.amber, size: 20),
                       Icon(Icons.star_border, color: Colors.amber, size: 20),
                       SizedBox(width: 8),
-                      Text('4.0 (23 reviews)'),
+                      Text('${DummyData.productRating} (${DummyData.productReviewsCount} reviews)'),
                     ],
                   ),
                   const Divider(thickness: 5),
@@ -119,11 +129,11 @@ class ProductDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _buildColorOption(Colors.brown),
+                      buildColorOption(Colors.brown),
                       const SizedBox(width: 8),
-                      _buildColorOption(Colors.black),
+                      buildColorOption(Colors.black),
                       const SizedBox(width: 8),
-                      _buildColorOption(Colors.white),
+                      buildColorOption(Colors.white),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -134,7 +144,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'ZARA elegant Two-Button Fitted Blazer for Women. ZARA elegant Two-Button Fitted Blazer for Women',
+                    DummyData.productDescription,
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -146,22 +156,22 @@ class ProductDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   const Row(
                     children: [
-                      Expanded(child: Text('Product Code: 458754485')),
-                      Expanded(child: Text('Brand: Zara')),
+                      Expanded(child: Text('Product Code: ${DummyData.productCode}')),
+                      Expanded(child: Text('Brand: ${DummyData.productBrand}')),
                     ],
                   ),
                   const SizedBox(height: 8),
                   const Row(
                     children: [
-                      Expanded(child: Text('Fabric: Cotton')),
-                      Expanded(child: Text('Model wearing size: S')),
+                      Expanded(child: Text('Fabric: ${DummyData.productFabric}')),
+                      Expanded(child: Text('Model wearing size: ${DummyData.productModelSize}')),
                     ],
                   ),
                   const SizedBox(height: 8),
                   const Row(
                     children: [
-                      Expanded(child: Text('Shape: Tiered')),
-                      Expanded(child: Text('Shape: Tiered')),
+                      Expanded(child: Text('Shape: ${DummyData.productShape}')),
+                      Expanded(child: Text('Shape: ${DummyData.productShape}')),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -180,7 +190,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  _buildRatingBreakdown(),
+                  buildRatingBreakdown(),
                   const SizedBox(height: 16),
                   const Divider(thickness: 2),
                   // Reviews
@@ -189,7 +199,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  _buildReview(),
+                  buildReview(),
                   const SizedBox(height: 8),
                   const Divider(thickness: 2),
                   const TextButton(
@@ -239,7 +249,9 @@ class ProductDetailScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref.read(cartProvider.notifier).addProductToCart(product);
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 120, vertical: 16),
@@ -251,66 +263,6 @@ class ProductDetailScreen extends ConsumerWidget {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildColorOption(Color color) {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.black, width: 1),
-      ),
-    );
-  }
-
-  Widget _buildRatingBreakdown() {
-    return Column(
-      children: [
-        _buildRatingRow(5, 0.5),
-        _buildRatingRow(4, 0.3),
-        _buildRatingRow(3, 0.1),
-        _buildRatingRow(2, 0.05),
-        _buildRatingRow(1, 0.05),
-      ],
-    );
-  }
-
-  Widget _buildRatingRow(int star, double percentage) {
-    return Row(
-      children: [
-        Text('$star Star'),
-        const SizedBox(width: 8),
-        Expanded(
-          child: LinearProgressIndicator(value: percentage),
-        ),
-        const SizedBox(width: 8),
-        Text('${(percentage * 100).toInt()}%'),
-      ],
-    );
-  }
-
-  Widget _buildReview() {
-    return const ListTile(
-      leading: CircleAvatar(
-        child: Icon(Icons.person),
-      ),
-      title: Text('Nourhan Selim'),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 8),
-          Text('1st August 2022'),
-          SizedBox(height: 8),
-          Text(
-            'Very elegant product',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text('Very nice and elegant product and the fabric is awesome'),
         ],
       ),
     );

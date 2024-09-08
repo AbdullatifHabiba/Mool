@@ -1,13 +1,23 @@
-
 import 'package:mool/constants/images.dart';
 import 'package:mool/interfaces/product.dart';
+
 class DummyData {
   static List<Product> getProducts() {
     return products;
   }
-}
-  List<Product> products =
-[
+
+  static const String productTitle = 'Elegant Blazer';
+  static const String productBrand = 'ZARA';
+  static const double productRating = 4.0;
+  static const int productReviewsCount = 23;
+  static const String productDescription = 'ZARA elegant Two-Button Fitted Blazer for Women. ZARA elegant Two-Button Fitted Blazer for Women';
+  static const String productCode = '458754485';
+  static const String productFabric = 'Cotton';
+  static const String productModelSize = 'S';
+  static const String productShape = 'Tiered';
+  static const double productPrice = 2500.0;
+
+  static List<Product> products = [
     Product(
         title: 'Elegant Dress',
         imagePath: Images.accessories,
@@ -97,4 +107,4 @@ class DummyData {
         size: 'L',
         color: 'Blue'),
   ];
- 
+}
