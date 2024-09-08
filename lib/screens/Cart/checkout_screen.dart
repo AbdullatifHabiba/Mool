@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/screens/Cart/order_confirmation_screen.dart';
 import 'package:mool/screens/Cart/shipping_address_step.dart';
 import 'package:mool/widgets/custom_back_arrow.dart';
 import 'payment_method_step.dart';
@@ -65,6 +66,9 @@ class CheckoutScreen extends ConsumerWidget {
         return const PaymentMethodStep();
       case 2:
         return const OrderReviewStep();
+      case 3:
+        return const OrderConfirmationScreen();
+
       default:
         return const SizedBox.shrink();
     }
