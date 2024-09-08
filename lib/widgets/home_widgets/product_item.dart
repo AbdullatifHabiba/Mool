@@ -143,7 +143,14 @@ class _ProductItemState extends ConsumerState<ProductItem> {
                     right: 0,
                     child: GestureDetector(
                       onTap: () {
-                        ref.read(cartProvider.notifier).addProductToCart(widget.product);
+                        ref.read(cartProvider.notifier).addProductToCart(widget.product); 
+                        // show snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${widget.product.title} added to cart'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                       },
                       child: Container(
                         width: 40,

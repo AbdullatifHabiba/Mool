@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mool/screens/Cart/checkout_screen.dart';
 import 'package:mool/screens/home/home_screen.dart';
 import 'package:mool/states/cart.dart';
 import 'package:mool/widgets/cart_item_card.dart';
@@ -68,7 +69,12 @@ class CartScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle checkout
+                  // Navigate to checkout screen
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CheckoutScreen(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),

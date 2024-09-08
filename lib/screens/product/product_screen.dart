@@ -251,6 +251,13 @@ class ProductDetailScreen extends ConsumerWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     ref.read(cartProvider.notifier).addProductToCart(product);
+                    // Show a snackbar
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${product.title} added to cart'),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(

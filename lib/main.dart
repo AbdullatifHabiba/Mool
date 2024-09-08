@@ -41,7 +41,7 @@ ThemeData appTheme() {
     // TextButton theme
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor:const Color.fromARGB(100, 13, 14, 15),
+        foregroundColor: const Color.fromARGB(100, 13, 14, 15),
         textStyle: const TextStyle(fontSize: 16),
       ),
     ),
@@ -56,7 +56,7 @@ ThemeData appTheme() {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
-        side:const BorderSide(color: Colors.black),
+        side: const BorderSide(color: Colors.black),
       ),
     ),
 
@@ -83,6 +83,7 @@ ThemeData appTheme() {
         ),
       ),
     ),
+
     // Bottom navigation bar theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFF292D32), // Background from Figma
@@ -98,7 +99,37 @@ ThemeData appTheme() {
       showUnselectedLabels: false, // Hiding unselected labels
       type: BottomNavigationBarType
           .fixed, // Fixed to accommodate absolute positioning
-      elevation: 0, 
+      elevation: 0,
+    ),
+
+    // Custom TextTheme
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+          fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+      displayMedium: TextStyle(
+          fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+      displaySmall: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+      headlineLarge: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+      headlineMedium: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+      headlineSmall: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+      titleLarge: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black),
+      titleMedium: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+      bodyLarge: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+      bodyMedium: TextStyle(
+          fontSize: 12, fontWeight: FontWeight.normal, color: Colors.black),
+      labelLarge: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+      bodySmall: TextStyle(
+          fontSize: 12, fontWeight: FontWeight.normal, color: Colors.grey),
+      labelSmall: TextStyle(
+          fontSize: 10, fontWeight: FontWeight.normal, color: Colors.grey),
     ),
   );
 }
